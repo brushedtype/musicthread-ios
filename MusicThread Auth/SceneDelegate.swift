@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var authSession: ASWebAuthenticationSession?
 
     let client = ClientCredentials(
-        baseURL: "http://localhost:8080/oauth",
+        baseURL: "https://musicthread.app/oauth",
         clientId: "1fa875b7a58ecdf4380c9ddd2b9ab6c1",
         redirectURI: "musicthread://auth"
     )
