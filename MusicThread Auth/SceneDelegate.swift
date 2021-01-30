@@ -9,78 +9,6 @@ import UIKit
 import AuthenticationServices
 import SwiftUI
 
-struct ThreadView: View {
-
-    let thread: Thread
-
-    var body: some View {
-        VStack {
-            Text(verbatim: self.thread.title)
-            Text(verbatim: self.thread.author.name)
-        }
-    }
-
-}
-
-struct ThreadListItemView: View {
-
-    let thread: Thread
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4.0) {
-            Text(verbatim: self.thread.title)
-
-            Text(verbatim: self.thread.author.name)
-                .font(.caption)
-        }
-        .padding(.vertical, 4.0)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-}
-
-struct ThreadListView: View {
-
-    @ObservedObject var viewModel: ThreadListModel
-
-
-    var body: some View {
-        NavigationView {
-            List(self.viewModel.threads, id: \.key) { thread in
-                NavigationLink(destination: ThreadView(thread: thread)) {
-                    ThreadListItemView(thread: thread)
-                }
-            }
-            .navigationTitle("Threads")
-            .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-
-}
-
-class ThreadListModel: ObservableObject {
-
-    private var apiClient = API(baseURL: URL(string: "https://musicthread.app/api")!)
-
-    @Published var threads: [Thread] = []
-
-    func setAuth(tokenResponse: TokenResponse) {
-        self.apiClient.setTokenStore(TokenStore(authBaseURL: "https://musicthread.app/oauth", tokenResponse: tokenResponse))
-
-        self.apiClient.fetchThreads { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let threadResponse):
-                    self.threads = threadResponse.threads
-                }
-            }
-        }
-    }
-
-}
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -92,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         redirectURI: "musicthread://auth"
     )
 
-    let viewModel = ThreadListModel()
+    let viewModel = ThreadListViewModel()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

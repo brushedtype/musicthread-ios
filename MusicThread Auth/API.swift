@@ -70,12 +70,14 @@ struct Thread: Decodable {
     let title: String
     let description: String
     let author: Account
+    let pageURL: URL
 
     enum CodingKeys: String, CodingKey {
         case key
         case title
         case description
         case author
+        case pageURL = "page_url"
     }
 
 }
