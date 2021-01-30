@@ -18,6 +18,7 @@ struct ThreadListItemView: View {
 
             Text(verbatim: self.thread.author.name)
                 .font(.caption)
+                .opacity(0.8)
         }
         .padding(.vertical, 4.0)
         .frame(maxWidth: .infinity, alignment: .leading)

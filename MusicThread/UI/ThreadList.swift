@@ -10,9 +10,10 @@ import SwiftUI
 
 class ThreadListViewModel: ObservableObject {
 
-    private var apiClient = API(baseURL: URL(string: "https://musicthread.app/api")!)
+    let apiClient = API(baseURL: URL(string: "https://musicthread.app/api")!)
 
     @Published var threads: [Thread] = []
+
 
     func setAuth(tokenResponse: TokenResponse) {
         self.apiClient.setTokenStore(TokenStore(authBaseURL: "https://musicthread.app/oauth", tokenResponse: tokenResponse))
@@ -39,7 +40,7 @@ struct ThreadListView: View {
     var body: some View {
         NavigationView {
             List(self.viewModel.threads, id: \.key) { thread in
-                NavigationLink(destination: ThreadView(thread: thread)) {
+                NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
                     ThreadListItemView(thread: thread)
                 }
             }

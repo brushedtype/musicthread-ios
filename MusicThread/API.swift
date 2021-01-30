@@ -58,6 +58,22 @@ class API {
         }
     }
 
+    func fetchThread(key: String, completion: @escaping (Result<ThreadLinksResponse, Error>) -> Void) {
+        let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
+
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil, let data = data else {
+                let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
+                return completion(.failure(err))
+            }
+
+            let jsonDecoder = JSONDecoder()
+            let result = jsonDecoder.decodeResult(ThreadLinksResponse.self, from: data)
+
+            completion(result)
+        }.resume()
+    }
+
 }
 
 struct Account: Decodable {
@@ -65,10 +81,10 @@ struct Account: Decodable {
 }
 
 struct Thread: Decodable {
-
     let key: String
     let title: String
     let description: String
+    let tags: [String]
     let author: Account
     let pageURL: URL
 
@@ -76,12 +92,33 @@ struct Thread: Decodable {
         case key
         case title
         case description
+        case tags
         case author
         case pageURL = "page_url"
     }
-
 }
 
 struct ThreadResponse: Decodable {
     let threads: [Thread]
+}
+
+struct Link: Decodable {
+    let key: String
+    let title: String
+    let artist: String
+    let thumbnailURL: URL
+    let pageURL: URL
+
+    enum CodingKeys: String, CodingKey {
+        case key
+        case title
+        case artist
+        case thumbnailURL = "thumbnail_url"
+        case pageURL = "page_url"
+    }
+}
+
+struct ThreadLinksResponse: Decodable {
+    let thread: Thread
+    let links: [Link]
 }
