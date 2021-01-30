@@ -14,10 +14,21 @@ class ThreadListViewModel: ObservableObject {
 
     @Published var threads: [Thread] = []
     @Published var bookmarks: [Thread] = []
+    @Published var featured: [Thread] = []
 
 
     func setAuth(tokenResponse: TokenResponse) {
         self.apiClient.setTokenStore(TokenStore(authBaseURL: "https://musicthread.app/oauth", tokenResponse: tokenResponse))
+
+        self.fetchThreads()
+        self.fetchBookmarks()
+        self.fetchFeatured()
+    }
+
+    func fetchThreads() {
+        guard self.apiClient.isAuthenticated else {
+            return
+        }
 
         self.apiClient.fetchThreads { (result) in
             DispatchQueue.main.async {
@@ -29,6 +40,12 @@ class ThreadListViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    func fetchBookmarks() {
+        guard self.apiClient.isAuthenticated else {
+            return
+        }
 
         self.apiClient.fetchBookmarks { (result) in
             DispatchQueue.main.async {
@@ -37,6 +54,23 @@ class ThreadListViewModel: ObservableObject {
                     debugPrint(error)
                 case .success(let threadResponse):
                     self.bookmarks = threadResponse.threads
+                }
+            }
+        }
+    }
+
+    func fetchFeatured() {
+        guard self.featured.isEmpty else {
+            return
+        }
+
+        self.apiClient.fetchFeatured { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    debugPrint(error)
+                case .success(let threadResponse):
+                    self.featured = threadResponse.threads
                 }
             }
         }
@@ -77,6 +111,20 @@ struct ThreadListView: View {
             .tabItem {
                 Image(systemName: "bookmark.fill")
                 Text("Bookmarks")
+            }
+
+            NavigationView {
+                List(self.viewModel.featured, id: \.key) { thread in
+                    NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
+                        ThreadListItemView(thread: thread)
+                    }
+                }
+                .navigationTitle("Featured")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Image(systemName: "star.circle.fill")
+                Text("Featured")
             }
         }
     }

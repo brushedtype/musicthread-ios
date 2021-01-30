@@ -13,6 +13,10 @@ class API {
 
     private var tokenStore: TokenStore?
 
+    var isAuthenticated: Bool {
+        return self.tokenStore != nil
+    }
+
 
     init(baseURL: URL) {
         self.baseURL = baseURL
@@ -86,6 +90,22 @@ class API {
                 }.resume()
             }
         }
+    }
+
+    func fetchFeatured(completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+        let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/featured"))
+
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil, let data = data else {
+                let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
+                return completion(.failure(err))
+            }
+
+            let jsonDecoder = JSONDecoder()
+            let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
+
+            completion(result)
+        }.resume()
     }
 
     func fetchThread(key: String, completion: @escaping (Result<ThreadLinksResponse, Error>) -> Void) {
