@@ -7,8 +7,79 @@
 
 import UIKit
 import AuthenticationServices
-import CryptoKit
-import Security
+import SwiftUI
+
+struct ThreadView: View {
+
+    let thread: Thread
+
+    var body: some View {
+        VStack {
+            Text(verbatim: self.thread.title)
+            Text(verbatim: self.thread.author.name)
+        }
+    }
+
+}
+
+struct ThreadListItemView: View {
+
+    let thread: Thread
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4.0) {
+            Text(verbatim: self.thread.title)
+
+            Text(verbatim: self.thread.author.name)
+                .font(.caption)
+        }
+        .padding(.vertical, 4.0)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+}
+
+struct ThreadListView: View {
+
+    @ObservedObject var viewModel: ThreadListModel
+
+
+    var body: some View {
+        NavigationView {
+            List(self.viewModel.threads, id: \.key) { thread in
+                NavigationLink(destination: ThreadView(thread: thread)) {
+                    ThreadListItemView(thread: thread)
+                }
+            }
+            .navigationTitle("Threads")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+}
+
+class ThreadListModel: ObservableObject {
+
+    private var apiClient = API(baseURL: URL(string: "https://musicthread.app/api")!)
+
+    @Published var threads: [Thread] = []
+
+    func setAuth(tokenResponse: TokenResponse) {
+        self.apiClient.setTokenStore(TokenStore(authBaseURL: "https://musicthread.app/oauth", tokenResponse: tokenResponse))
+
+        self.apiClient.fetchThreads { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    debugPrint(error)
+                case .success(let threadResponse):
+                    self.threads = threadResponse.threads
+                }
+            }
+        }
+    }
+
+}
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -21,12 +92,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         redirectURI: "musicthread://auth"
     )
 
+    let viewModel = ThreadListModel()
+
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        self.window = UIWindow(windowScene: scene as! UIWindowScene)
+        self.window?.rootViewController = UIHostingController(rootView: ThreadListView(viewModel: self.viewModel))
+        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -104,7 +176,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     debugPrint(error)
 
                 case .success(let tokenResposne):
-                    debugPrint(tokenResposne)
+                    self.viewModel.setAuth(tokenResponse: tokenResposne)
                 }
             }
         }
