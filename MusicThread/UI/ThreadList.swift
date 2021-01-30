@@ -7,18 +7,35 @@
 
 import Foundation
 import SwiftUI
+import KeychainAccess
 
 class ThreadListViewModel: ObservableObject {
 
-    let apiClient = API(baseURL: URL(string: "https://musicthread.app/api")!)
+    let client: ClientCredentials
+    let keychain: Keychain
+    let apiClient: API
 
     @Published var threads: [Thread] = []
     @Published var bookmarks: [Thread] = []
     @Published var featured: [Thread] = []
 
 
+    init(client: ClientCredentials, keychain: Keychain) {
+        self.client = client
+        self.apiClient = API(baseURL: client.baseURL.appendingPathComponent("/api"), client: client, keychain: keychain)
+        self.keychain = keychain
+
+        if self.apiClient.isAuthenticated {
+            self.fetchThreads()
+            self.fetchBookmarks()
+            self.fetchFeatured()
+        }
+    }
+
     func setAuth(tokenResponse: TokenResponse) {
-        self.apiClient.setTokenStore(TokenStore(authBaseURL: "https://musicthread.app/oauth", tokenResponse: tokenResponse))
+        try? self.keychain.set(tokenResponse.refreshToken, key: "refresh_token")
+
+        self.apiClient.setTokenStore(TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), tokenResponse: tokenResponse))
 
         self.fetchThreads()
         self.fetchBookmarks()

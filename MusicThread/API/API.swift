@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import KeychainAccess
 
 class API {
 
     let baseURL: URL
+    let client: ClientCredentials
+    let keychain: Keychain
 
     private var tokenStore: TokenStore?
 
@@ -18,8 +21,14 @@ class API {
     }
 
 
-    init(baseURL: URL) {
+    init(baseURL: URL, client: ClientCredentials, keychain: Keychain) {
         self.baseURL = baseURL
+        self.client = client
+        self.keychain = keychain
+
+        if let refreshToken = try? self.keychain.get("refresh_token") {
+            self.setTokenStore(TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), refreshToken: refreshToken))
+        }
     }
 
     func setTokenStore(_ tokenStore: TokenStore) {
@@ -38,7 +47,7 @@ class API {
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken { (result) in
+        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -68,7 +77,7 @@ class API {
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken { (result) in
+        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))

@@ -8,6 +8,7 @@
 import UIKit
 import AuthenticationServices
 import SwiftUI
+import KeychainAccess
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -15,12 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var authSession: ASWebAuthenticationSession?
 
     let client = ClientCredentials(
-        baseURL: "https://musicthread.app/oauth",
+        baseURL: URL(string: "https://musicthread.app")!,
         clientId: "1fa875b7a58ecdf4380c9ddd2b9ab6c1",
         redirectURI: "musicthread://auth"
     )
 
-    let viewModel = ThreadListViewModel()
+    lazy var viewModel = ThreadListViewModel(client: self.client, keychain: Keychain(service: "co.brushedtype.musicthread"))
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -40,7 +41,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
 
-        self.startAuth()
+        if self.viewModel.apiClient.isAuthenticated == false {
+            self.startAuth()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -104,6 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     debugPrint(error)
 
                 case .success(let tokenResposne):
+                    debugPrint(tokenResposne)
                     self.viewModel.setAuth(tokenResponse: tokenResposne)
                 }
             }

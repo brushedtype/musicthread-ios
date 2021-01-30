@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		BC3DADAC25C5B97700480220 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAB25C5B97700480220 /* ThreadView.swift */; };
 		BC3DADB025C5B99C00480220 /* ThreadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAF25C5B99C00480220 /* ThreadList.swift */; };
 		BC3DADB325C5B9E800480220 /* ThreadListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */; };
+		BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC695CC925C5FCF90003AA2B /* KeychainAccess */; };
 		BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29325B49C2900E266F8 /* AppDelegate.swift */; };
 		BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29525B49C2900E266F8 /* SceneDelegate.swift */; };
 		BC78F29D25B49C2A00E266F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC78F29C25B49C2A00E266F8 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +55,16 @@
 				BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		BC695CCC25C60A5E0003AA2B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				BCD7A97D25BED2ED007BCF8D /* Auth.swift */,
+				BC3DADA425C5951200480220 /* API.swift */,
+				BC3DADA125C5931900480220 /* TokenStore.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		BC78F28725B49C2900E266F8 = {
@@ -74,9 +86,7 @@
 		BC78F29225B49C2900E266F8 /* MusicThread */ = {
 			isa = PBXGroup;
 			children = (
-				BCD7A97D25BED2ED007BCF8D /* Auth.swift */,
-				BC3DADA125C5931900480220 /* TokenStore.swift */,
-				BC3DADA425C5951200480220 /* API.swift */,
+				BC695CCC25C60A5E0003AA2B /* API */,
 				BC78F29325B49C2900E266F8 /* AppDelegate.swift */,
 				BC78F29525B49C2900E266F8 /* SceneDelegate.swift */,
 				BC3DADAA25C5B96B00480220 /* UI */,
@@ -103,6 +113,9 @@
 			dependencies = (
 			);
 			name = MusicThread;
+			packageProductDependencies = (
+				BC695CC925C5FCF90003AA2B /* KeychainAccess */,
+			);
 			productName = "MusicThread Auth";
 			productReference = BC78F29025B49C2900E266F8 /* MusicThread.app */;
 			productType = "com.apple.product-type.application";
@@ -130,6 +143,9 @@
 				Base,
 			);
 			mainGroup = BC78F28725B49C2900E266F8;
+			packageReferences = (
+				BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = BC78F29125B49C2900E266F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -357,6 +373,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BC695CC925C5FCF90003AA2B /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BC78F28825B49C2900E266F8 /* Project object */;
 }

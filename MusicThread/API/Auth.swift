@@ -65,7 +65,7 @@ struct TokenResponse: Decodable {
 }
 
 struct ClientCredentials {
-    let baseURL: String
+    let baseURL: URL
     let clientId: String
     let redirectURI: String
 }
@@ -78,7 +78,7 @@ extension ClientCredentials {
 
         let state = UUID().uuidString
 
-        var components = URLComponents(string: self.baseURL + "/authorize")!
+        var components = URLComponents(url: self.baseURL.appendingPathComponent("/oauth/authorize"), resolvingAgainstBaseURL: false)!
         components.queryItems = [
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "code_challenge", value: codeChallenge),
@@ -101,7 +101,7 @@ extension ClientCredentials {
             URLQueryItem(name: "redirect_uri", value: self.redirectURI),
         ]
 
-        var req = URLRequest(url: URL(string: self.baseURL + "/token")!)
+        var req = URLRequest(url: self.baseURL.appendingPathComponent("/oauth/token"))
         req.httpMethod = "POST"
         req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         req.httpBody = components.query?.data(using: .utf8)
@@ -109,6 +109,34 @@ extension ClientCredentials {
         URLSession.shared.dataTask(with: req) { (data, response, error) in
             guard let data = data else {
                 return debugPrint(error ?? "empty response")
+            }
+
+            let jsonDecoder = JSONDecoder()
+            let result = jsonDecoder.decodeResult(TokenResponse.self, from: data)
+
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }.resume()
+    }
+
+    func refreshToken(refreshToken: String, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name: "grant_type", value: "refresh_token"),
+            URLQueryItem(name: "refresh_token", value: refreshToken),
+            URLQueryItem(name: "client_id", value: self.clientId),
+        ]
+
+        var req = URLRequest(url: self.baseURL.appendingPathComponent("/oauth/token"))
+        req.httpMethod = "POST"
+        req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        req.httpBody = components.query?.data(using: .utf8)
+
+        URLSession.shared.dataTask(with: req) { (data, response, error) in
+            guard let data = data else {
+                let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -9933, userInfo: [NSLocalizedDescriptionKey: "Invalid refresh token response"])
+                return completion(.failure(err))
             }
 
             let jsonDecoder = JSONDecoder()
