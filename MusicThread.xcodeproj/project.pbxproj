@@ -25,7 +25,7 @@
 		BC3DADAB25C5B97700480220 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
 		BC3DADAF25C5B99C00480220 /* ThreadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadList.swift; sourceTree = "<group>"; };
 		BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadListItemView.swift; sourceTree = "<group>"; };
-		BC78F29025B49C2900E266F8 /* MusicThread Auth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MusicThread Auth.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC78F29025B49C2900E266F8 /* MusicThread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicThread.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC78F29325B49C2900E266F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC78F29525B49C2900E266F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BC78F29C25B49C2A00E266F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		BC78F28725B49C2900E266F8 = {
 			isa = PBXGroup;
 			children = (
-				BC78F29225B49C2900E266F8 /* MusicThread Auth */,
+				BC78F29225B49C2900E266F8 /* MusicThread */,
 				BC78F29125B49C2900E266F8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,12 +66,12 @@
 		BC78F29125B49C2900E266F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BC78F29025B49C2900E266F8 /* MusicThread Auth.app */,
+				BC78F29025B49C2900E266F8 /* MusicThread.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BC78F29225B49C2900E266F8 /* MusicThread Auth */ = {
+		BC78F29225B49C2900E266F8 /* MusicThread */ = {
 			isa = PBXGroup;
 			children = (
 				BCD7A97D25BED2ED007BCF8D /* Auth.swift */,
@@ -84,15 +84,15 @@
 				BC78F29E25B49C2A00E266F8 /* LaunchScreen.storyboard */,
 				BC78F2A125B49C2A00E266F8 /* Info.plist */,
 			);
-			path = "MusicThread Auth";
+			path = MusicThread;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BC78F28F25B49C2900E266F8 /* MusicThread Auth */ = {
+		BC78F28F25B49C2900E266F8 /* MusicThread */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC78F2A425B49C2A00E266F8 /* Build configuration list for PBXNativeTarget "MusicThread Auth" */;
+			buildConfigurationList = BC78F2A425B49C2A00E266F8 /* Build configuration list for PBXNativeTarget "MusicThread" */;
 			buildPhases = (
 				BC78F28C25B49C2900E266F8 /* Sources */,
 				BC78F28D25B49C2900E266F8 /* Frameworks */,
@@ -102,9 +102,9 @@
 			);
 			dependencies = (
 			);
-			name = "MusicThread Auth";
+			name = MusicThread;
 			productName = "MusicThread Auth";
-			productReference = BC78F29025B49C2900E266F8 /* MusicThread Auth.app */;
+			productReference = BC78F29025B49C2900E266F8 /* MusicThread.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -121,7 +121,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BC78F28B25B49C2900E266F8 /* Build configuration list for PBXProject "MusicThread Auth" */;
+			buildConfigurationList = BC78F28B25B49C2900E266F8 /* Build configuration list for PBXProject "MusicThread" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -134,7 +134,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BC78F28F25B49C2900E266F8 /* MusicThread Auth */,
+				BC78F28F25B49C2900E266F8 /* MusicThread */,
 			);
 		};
 /* End PBXProject section */
@@ -304,12 +304,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UMVF6688JY;
-				INFOPLIST_FILE = "MusicThread Auth/Info.plist";
+				INFOPLIST_FILE = MusicThread/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "co.brushedtype.MusicThread-Auth";
+				PRODUCT_BUNDLE_IDENTIFIER = co.brushedtype.musicthread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -323,12 +323,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UMVF6688JY;
-				INFOPLIST_FILE = "MusicThread Auth/Info.plist";
+				INFOPLIST_FILE = MusicThread/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "co.brushedtype.MusicThread-Auth";
+				PRODUCT_BUNDLE_IDENTIFIER = co.brushedtype.musicthread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -338,7 +338,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC78F28B25B49C2900E266F8 /* Build configuration list for PBXProject "MusicThread Auth" */ = {
+		BC78F28B25B49C2900E266F8 /* Build configuration list for PBXProject "MusicThread" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC78F2A225B49C2A00E266F8 /* Debug */,
@@ -347,7 +347,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC78F2A425B49C2A00E266F8 /* Build configuration list for PBXNativeTarget "MusicThread Auth" */ = {
+		BC78F2A425B49C2A00E266F8 /* Build configuration list for PBXNativeTarget "MusicThread" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC78F2A525B49C2A00E266F8 /* Debug */,
