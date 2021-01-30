@@ -13,6 +13,7 @@ class ThreadListViewModel: ObservableObject {
     let apiClient = API(baseURL: URL(string: "https://musicthread.app/api")!)
 
     @Published var threads: [Thread] = []
+    @Published var bookmarks: [Thread] = []
 
 
     func setAuth(tokenResponse: TokenResponse) {
@@ -28,6 +29,17 @@ class ThreadListViewModel: ObservableObject {
                 }
             }
         }
+
+        self.apiClient.fetchBookmarks { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    debugPrint(error)
+                case .success(let threadResponse):
+                    self.bookmarks = threadResponse.threads
+                }
+            }
+        }
     }
 
 }
@@ -38,14 +50,34 @@ struct ThreadListView: View {
 
 
     var body: some View {
-        NavigationView {
-            List(self.viewModel.threads, id: \.key) { thread in
-                NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
-                    ThreadListItemView(thread: thread)
+        TabView {
+            NavigationView {
+                List(self.viewModel.threads, id: \.key) { thread in
+                    NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
+                        ThreadListItemView(thread: thread)
+                    }
                 }
+                .navigationTitle("Threads")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .navigationTitle("Threads")
-            .navigationBarTitleDisplayMode(.inline)
+            .tabItem {
+                Image(systemName: "rectangle.grid.1x2.fill")
+                Text("Threads")
+            }
+
+            NavigationView {
+                List(self.viewModel.bookmarks, id: \.key) { thread in
+                    NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
+                        ThreadListItemView(thread: thread)
+                    }
+                }
+                .navigationTitle("Bookmarks")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Image(systemName: "bookmark.fill")
+                Text("Bookmarks")
+            }
         }
     }
 

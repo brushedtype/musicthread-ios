@@ -58,6 +58,36 @@ class API {
         }
     }
 
+    func fetchBookmarks(completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+        guard let tokenStore = self.tokenStore else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+            return completion(.failure(err))
+        }
+
+        tokenStore.fetchAccessToken { (result) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+
+            case .success(let accessToken):
+                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/bookmarks"))
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    guard error == nil, let data = data else {
+                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
+                        return completion(.failure(err))
+                    }
+
+                    let jsonDecoder = JSONDecoder()
+                    let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
+
+                    completion(result)
+                }.resume()
+            }
+        }
+    }
+
     func fetchThread(key: String, completion: @escaping (Result<ThreadLinksResponse, Error>) -> Void) {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
 
