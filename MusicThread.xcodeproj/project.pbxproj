@@ -19,6 +19,7 @@
 		BC52CC0125C6DD7900746627 /* FeaturedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */; };
 		BC52CC0425C6DE9200746627 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */; };
 		BC52CC0725C6DEA600746627 /* ThreadLinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */; };
+		BC52CC0A25C6E23B00746627 /* NewThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0925C6E23B00746627 /* NewThreadView.swift */; };
 		BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC695CC925C5FCF90003AA2B /* KeychainAccess */; };
 		BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29325B49C2900E266F8 /* AppDelegate.swift */; };
 		BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29525B49C2900E266F8 /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 		BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedTabView.swift; sourceTree = "<group>"; };
 		BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
 		BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadLinkItemView.swift; sourceTree = "<group>"; };
+		BC52CC0925C6E23B00746627 /* NewThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewThreadView.swift; sourceTree = "<group>"; };
 		BC78F29025B49C2900E266F8 /* MusicThread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicThread.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC78F29325B49C2900E266F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC78F29525B49C2900E266F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				BC52CBFD25C6DD5D00746627 /* BookmarksTabView.swift */,
 				BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */,
 				BC3DADAB25C5B97700480220 /* ThreadView.swift */,
+				BC52CC0925C6E23B00746627 /* NewThreadView.swift */,
 				BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */,
 				BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */,
 				BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */,
@@ -201,6 +204,7 @@
 				BC3DADA225C5931900480220 /* TokenStore.swift in Sources */,
 				BC52CBFB25C6DD4600746627 /* ThreadsTabView.swift in Sources */,
 				BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */,
+				BC52CC0A25C6E23B00746627 /* NewThreadView.swift in Sources */,
 				BC52CC0125C6DD7900746627 /* FeaturedTabView.swift in Sources */,
 				BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */,
 				BC52CBFE25C6DD5D00746627 /* BookmarksTabView.swift in Sources */,

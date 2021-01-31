@@ -22,16 +22,22 @@ struct ThreadView: View {
         List {
             Section(header: ThreadHeaderView(thread: self.thread).textCase(nil)) {
                 if self.isFetchingLinks {
-                    HStack(spacing: 16) {
-                        ProgressView()
-                        Text("Loading links...")
+                    VStack {
+                        HStack(spacing: 16) {
+                            ProgressView()
+                            Text("Loading links...")
+                        }
+                        .foregroundColor(Color(.placeholderText))
                     }
-                    .foregroundColor(Color(.placeholderText))
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 10)
                 } else if self.links.isEmpty {
-                    Text("\(self.thread.author.name) hasn't posted any links yet...")
-                        .foregroundColor(Color(.placeholderText))
-                        .padding(.vertical, 10)
+                    VStack {
+                        Text("\(self.thread.author.name) hasn't posted any links yet...")
+                            .foregroundColor(Color(.placeholderText))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical, 10)
                 } else {
                     ForEach(self.links, id: \.key) { link in
                         ThreadLinkItemView(link: link)

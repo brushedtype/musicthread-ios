@@ -41,7 +41,7 @@ class API {
         }
     }
 
-    func fetchThreads(completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+    func fetchThreads(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -63,7 +63,7 @@ class API {
                     }
 
                     let jsonDecoder = JSONDecoder()
-                    let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
+                    let result = jsonDecoder.decodeResult(ThreadListResponse.self, from: data)
 
                     completion(result)
                 }.resume()
@@ -71,7 +71,7 @@ class API {
         }
     }
 
-    func fetchBookmarks(completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+    func fetchBookmarks(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -93,6 +93,42 @@ class API {
                     }
 
                     let jsonDecoder = JSONDecoder()
+                    let result = jsonDecoder.decodeResult(ThreadListResponse.self, from: data)
+
+                    completion(result)
+                }.resume()
+            }
+        }
+    }
+
+    func createThread(title: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+        guard let tokenStore = self.tokenStore else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+            return completion(.failure(err))
+        }
+
+        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+
+            case .success(let accessToken):
+                let reqBody = CreateThreadRequest(title: title, description: "", tags: [])
+
+                let jsonEncoder = JSONEncoder()
+
+                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/new-thread"))
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+                request.httpMethod = "POST"
+                request.httpBody = try? jsonEncoder.encode(reqBody)
+
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    guard error == nil, let data = data else {
+                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
+                        return completion(.failure(err))
+                    }
+
+                    let jsonDecoder = JSONDecoder()
                     let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
 
                     completion(result)
@@ -101,7 +137,7 @@ class API {
         }
     }
 
-    func fetchFeatured(completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+    func fetchFeatured(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/featured"))
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -111,13 +147,13 @@ class API {
             }
 
             let jsonDecoder = JSONDecoder()
-            let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
+            let result = jsonDecoder.decodeResult(ThreadListResponse.self, from: data)
 
             completion(result)
         }.resume()
     }
 
-    func fetchThread(key: String, completion: @escaping (Result<ThreadLinksResponse, Error>) -> Void) {
+    func fetchThread(key: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -127,7 +163,7 @@ class API {
             }
 
             let jsonDecoder = JSONDecoder()
-            let result = jsonDecoder.decodeResult(ThreadLinksResponse.self, from: data)
+            let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
 
             completion(result)
         }.resume()
@@ -157,7 +193,7 @@ struct Thread: Decodable {
     }
 }
 
-struct ThreadResponse: Decodable {
+struct ThreadListResponse: Decodable {
     let threads: [Thread]
 }
 
@@ -177,7 +213,19 @@ struct Link: Decodable {
     }
 }
 
-struct ThreadLinksResponse: Decodable {
+struct ThreadResponse: Decodable {
     let thread: Thread
     let links: [Link]
+}
+
+struct CreateThreadRequest: Codable {
+    let title: String
+    let description: String
+    let tags: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case title
+        case description
+        case tags
+    }
 }
