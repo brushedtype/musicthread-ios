@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct ThreadHeaderView: View {
 
@@ -47,12 +48,23 @@ struct ThreadLinkItemView: View {
 
     var body: some View {
         SwiftUI.Link(destination: self.link.pageURL, label: {
-            VStack(alignment: .leading, spacing: 4.0) {
-                Text(verbatim: self.link.title)
+            HStack(alignment: .top, spacing: 8) {
+                KFImage(self.link.thumbnailURL)
+                    .appendProcessor(ResizingImageProcessor(referenceSize: CGSize(width: 38, height: 38), mode: .aspectFill))
+                    .scaleFactor(UIScreen.main.scale)
+                    .aspectRatio(1, contentMode: .fill)
+                    .frame(width: 38, height: 38)
+                    .background(Color(.placeholderText))
+                    .cornerRadius(3)
 
-                Text(verbatim: self.link.artist)
-                    .font(.caption)
-                    .opacity(0.8)
+                VStack(alignment: .leading, spacing: 4.0) {
+                    Text(verbatim: self.link.title)
+
+                    Text(verbatim: self.link.artist)
+                        .font(.caption)
+                        .opacity(0.8)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.vertical, 4.0)
             .frame(maxWidth: .infinity, alignment: .leading)
