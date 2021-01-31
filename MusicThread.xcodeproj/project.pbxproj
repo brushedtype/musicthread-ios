@@ -10,9 +10,15 @@
 		BC3DADA225C5931900480220 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA125C5931900480220 /* TokenStore.swift */; };
 		BC3DADA525C5951200480220 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA425C5951200480220 /* API.swift */; };
 		BC3DADAC25C5B97700480220 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAB25C5B97700480220 /* ThreadView.swift */; };
-		BC3DADB025C5B99C00480220 /* ThreadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAF25C5B99C00480220 /* ThreadList.swift */; };
+		BC3DADB025C5B99C00480220 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAF25C5B99C00480220 /* RootView.swift */; };
 		BC3DADB325C5B9E800480220 /* ThreadListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */; };
 		BC52CBF125C6CAED00746627 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = BC52CBF025C6CAED00746627 /* Kingfisher */; };
+		BC52CBF525C6D9DD00746627 /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CBF425C6D9DD00746627 /* RootViewModel.swift */; };
+		BC52CBFB25C6DD4600746627 /* ThreadsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CBFA25C6DD4600746627 /* ThreadsTabView.swift */; };
+		BC52CBFE25C6DD5D00746627 /* BookmarksTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CBFD25C6DD5D00746627 /* BookmarksTabView.swift */; };
+		BC52CC0125C6DD7900746627 /* FeaturedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */; };
+		BC52CC0425C6DE9200746627 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */; };
+		BC52CC0725C6DEA600746627 /* ThreadLinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */; };
 		BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC695CC925C5FCF90003AA2B /* KeychainAccess */; };
 		BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29325B49C2900E266F8 /* AppDelegate.swift */; };
 		BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29525B49C2900E266F8 /* SceneDelegate.swift */; };
@@ -25,8 +31,14 @@
 		BC3DADA125C5931900480220 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 		BC3DADA425C5951200480220 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BC3DADAB25C5B97700480220 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
-		BC3DADAF25C5B99C00480220 /* ThreadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadList.swift; sourceTree = "<group>"; };
+		BC3DADAF25C5B99C00480220 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadListItemView.swift; sourceTree = "<group>"; };
+		BC52CBF425C6D9DD00746627 /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		BC52CBFA25C6DD4600746627 /* ThreadsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsTabView.swift; sourceTree = "<group>"; };
+		BC52CBFD25C6DD5D00746627 /* BookmarksTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTabView.swift; sourceTree = "<group>"; };
+		BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedTabView.swift; sourceTree = "<group>"; };
+		BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
+		BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadLinkItemView.swift; sourceTree = "<group>"; };
 		BC78F29025B49C2900E266F8 /* MusicThread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicThread.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC78F29325B49C2900E266F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC78F29525B49C2900E266F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,8 +64,13 @@
 		BC3DADAA25C5B96B00480220 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				BC3DADAF25C5B99C00480220 /* RootView.swift */,
+				BC52CBFA25C6DD4600746627 /* ThreadsTabView.swift */,
+				BC52CBFD25C6DD5D00746627 /* BookmarksTabView.swift */,
+				BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */,
 				BC3DADAB25C5B97700480220 /* ThreadView.swift */,
-				BC3DADAF25C5B99C00480220 /* ThreadList.swift */,
+				BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */,
+				BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */,
 				BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */,
 			);
 			path = UI;
@@ -91,6 +108,7 @@
 				BC695CCC25C60A5E0003AA2B /* API */,
 				BC78F29325B49C2900E266F8 /* AppDelegate.swift */,
 				BC78F29525B49C2900E266F8 /* SceneDelegate.swift */,
+				BC52CBF425C6D9DD00746627 /* RootViewModel.swift */,
 				BC3DADAA25C5B96B00480220 /* UI */,
 				BC78F29C25B49C2A00E266F8 /* Assets.xcassets */,
 				BC78F29E25B49C2A00E266F8 /* LaunchScreen.storyboard */,
@@ -176,14 +194,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC3DADB025C5B99C00480220 /* ThreadList.swift in Sources */,
+				BC52CC0425C6DE9200746627 /* ThreadHeaderView.swift in Sources */,
+				BC3DADB025C5B99C00480220 /* RootView.swift in Sources */,
 				BC3DADB325C5B9E800480220 /* ThreadListItemView.swift in Sources */,
 				BC3DADAC25C5B97700480220 /* ThreadView.swift in Sources */,
 				BC3DADA225C5931900480220 /* TokenStore.swift in Sources */,
+				BC52CBFB25C6DD4600746627 /* ThreadsTabView.swift in Sources */,
 				BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */,
+				BC52CC0125C6DD7900746627 /* FeaturedTabView.swift in Sources */,
 				BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */,
+				BC52CBFE25C6DD5D00746627 /* BookmarksTabView.swift in Sources */,
 				BC3DADA525C5951200480220 /* API.swift in Sources */,
+				BC52CBF525C6D9DD00746627 /* RootViewModel.swift in Sources */,
 				BCD7A97E25BED2ED007BCF8D /* Auth.swift in Sources */,
+				BC52CC0725C6DEA600746627 /* ThreadLinkItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

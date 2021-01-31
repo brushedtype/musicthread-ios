@@ -21,12 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         redirectURI: "musicthread://auth"
     )
 
-    lazy var viewModel = ThreadListViewModel(client: self.client, keychain: Keychain(service: "co.brushedtype.musicthread"))
+    lazy var viewModel = RootViewModel(client: self.client, keychain: Keychain(service: "co.brushedtype.musicthread"))
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         self.window = UIWindow(windowScene: scene as! UIWindowScene)
-        self.window?.rootViewController = UIHostingController(rootView: ThreadListView(viewModel: self.viewModel))
+        self.window?.rootViewController = UIHostingController(rootView: RootView(viewModel: self.viewModel))
         self.window?.makeKeyAndVisible()
     }
 

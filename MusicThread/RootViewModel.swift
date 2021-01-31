@@ -1,15 +1,15 @@
 //
-//  ThreadList.swift
-//  MusicThread Auth
+//  RootViewModel.swift
+//  MusicThread
 //
-//  Created by Edward Wellbrook on 30/01/2021.
+//  Created by Edward Wellbrook on 31/01/2021.
 //
 
 import Foundation
 import SwiftUI
 import KeychainAccess
 
-class ThreadListViewModel: ObservableObject {
+class RootViewModel: ObservableObject {
 
     let client: ClientCredentials
     let keychain: Keychain
@@ -89,59 +89,6 @@ class ThreadListViewModel: ObservableObject {
                 case .success(let threadResponse):
                     self.featured = threadResponse.threads
                 }
-            }
-        }
-    }
-
-}
-
-struct ThreadListView: View {
-
-    @ObservedObject var viewModel: ThreadListViewModel
-
-
-    var body: some View {
-        TabView {
-            NavigationView {
-                List(self.viewModel.threads, id: \.key) { thread in
-                    NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
-                        ThreadListItemView(thread: thread)
-                    }
-                }
-                .navigationTitle("Threads")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-            .tabItem {
-                Image(systemName: "rectangle.grid.1x2.fill")
-                Text("Threads")
-            }
-
-            NavigationView {
-                List(self.viewModel.bookmarks, id: \.key) { thread in
-                    NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
-                        ThreadListItemView(thread: thread)
-                    }
-                }
-                .navigationTitle("Bookmarks")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-            .tabItem {
-                Image(systemName: "bookmark.fill")
-                Text("Bookmarks")
-            }
-
-            NavigationView {
-                List(self.viewModel.featured, id: \.key) { thread in
-                    NavigationLink(destination: ThreadView(thread: thread, apiClient: self.viewModel.apiClient)) {
-                        ThreadListItemView(thread: thread)
-                    }
-                }
-                .navigationTitle("Featured")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-            .tabItem {
-                Image(systemName: "star.circle.fill")
-                Text("Featured")
             }
         }
     }
