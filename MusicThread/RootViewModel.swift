@@ -93,4 +93,20 @@ class RootViewModel: ObservableObject {
         }
     }
 
+    func isThreadBookmarked(thread: Thread) -> Bool {
+        guard self.apiClient.isAuthenticated else {
+            return false
+        }
+
+        return self.bookmarks.contains(where: { $0.key == thread.key })
+    }
+
+    func isThreadOwn(thread: Thread) -> Bool {
+        guard self.apiClient.isAuthenticated else {
+            return false
+        }
+
+        return self.threads.contains(where: { $0.key == thread.key })
+    }
+
 }

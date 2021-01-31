@@ -10,18 +10,15 @@ import SwiftUI
 
 struct ThreadsTabView: View {
 
-    let apiClient: API
-    let threads: [Thread]
-
-    let reloadThreads: () -> Void
+    @ObservedObject var viewModel: RootViewModel
 
     @State var isPresentingNewThreadView = false
 
 
     var body: some View {
         NavigationView {
-            List(self.threads, id: \.key) { thread in
-                NavigationLink(destination: ThreadView(thread: thread, apiClient: self.apiClient)) {
+            List(self.viewModel.threads, id: \.key) { thread in
+                NavigationLink(destination: ThreadView(thread: thread, viewModel: self.viewModel)) {
                     ThreadListItemView(thread: thread)
                 }
             }
@@ -39,14 +36,13 @@ struct ThreadsTabView: View {
         .sheet(isPresented: self.$isPresentingNewThreadView, content: {
             NavigationView {
                 NewThreadView(submitAction: { threadTitle in
-                    self.apiClient.createThread(title: threadTitle) { (result) in
+                    self.viewModel.apiClient.createThread(title: threadTitle) { (result) in
                         DispatchQueue.main.async {
                             switch result {
                             case .failure(let error):
                                 debugPrint(error)
-                            case .success(let response):
-                                debugPrint(response.thread)
-                                self.reloadThreads()
+                            case .success(_):
+                                self.viewModel.fetchThreads()
                                 self.isPresentingNewThreadView = false
                             }
                         }

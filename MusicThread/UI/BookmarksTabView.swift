@@ -10,14 +10,13 @@ import SwiftUI
 
 struct BookmarksTabView: View {
 
-    let apiClient: API
-    let bookmarks: [Thread]
+    @ObservedObject var viewModel: RootViewModel
 
 
     var body: some View {
         NavigationView {
-            List(self.bookmarks, id: \.key) { thread in
-                NavigationLink(destination: ThreadView(thread: thread, apiClient: self.apiClient)) {
+            List(self.viewModel.bookmarks, id: \.key) { thread in
+                NavigationLink(destination: ThreadView(thread: thread, viewModel: self.viewModel)) {
                     ThreadListItemView(thread: thread)
                 }
             }
@@ -28,6 +27,20 @@ struct BookmarksTabView: View {
             Image(systemName: "bookmark.fill")
             Text("Bookmarks")
         }
+    }
+
+}
+
+extension ThreadView {
+
+    init(thread: Thread, viewModel: RootViewModel) {
+        self.init(
+            thread: thread,
+            isOwnThread: viewModel.isThreadOwn(thread: thread),
+            bookmarkState: { viewModel.isThreadBookmarked(thread: thread) },
+            reloadBookmarks: viewModel.fetchBookmarks,
+            apiClient: viewModel.apiClient
+        )
     }
 
 }

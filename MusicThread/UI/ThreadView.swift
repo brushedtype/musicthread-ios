@@ -11,7 +11,11 @@ import SwiftUI
 struct ThreadView: View {
 
     let thread: Thread
+    let isOwnThread: Bool
+    let bookmarkState: () -> Bool
+    let reloadBookmarks: () -> Void
 
+    @State var isBookmarked: Bool = false
     @State var isFetchingLinks = true
     @State var links: [Link] = []
 
@@ -46,12 +50,37 @@ struct ThreadView: View {
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationBarItems(trailing: SwiftUI.Link(destination: self.thread.pageURL, label: {
-            Image(systemName: "safari")
-                .imageScale(.large)
-                .accessibility(hint: Text("Open in Safari"))
-        }))
+        .navigationBarItems(trailing: HStack(spacing: 20) {
+            if self.isOwnThread == false {
+                Button(action: {
+                    let isBookmarked = self.isBookmarked
+
+                    self.apiClient.updateBookmark(threadKey: self.thread.key, isBookmarked: !isBookmarked) { (result) in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .failure(let error):
+                                debugPrint(error)
+                            case .success(let response):
+                                self.isBookmarked = response.isBookmarked
+                            }
+                            self.reloadBookmarks()
+                        }
+                    }
+                }, label: {
+                    Image(systemName: self.isBookmarked ? "bookmark.fill" : "bookmark")
+                        .imageScale(.large)
+                })
+            }
+
+            SwiftUI.Link(destination: self.thread.pageURL, label: {
+                Image(systemName: "safari")
+                    .imageScale(.large)
+                    .accessibility(hint: Text("Open in Safari"))
+            })
+        })
         .onAppear(perform: {
+            self.isBookmarked = self.bookmarkState()
+
             self.apiClient.fetchThread(key: self.thread.key) { result in
                 DispatchQueue.main.async {
                     switch result {

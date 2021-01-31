@@ -10,13 +10,13 @@ import SwiftUI
 
 struct FeaturedTabView: View {
 
-    let apiClient: API
-    let featured: [Thread]
+    @ObservedObject var viewModel: RootViewModel
+
 
     var body: some View {
         NavigationView {
-            List(self.featured, id: \.key) { thread in
-                NavigationLink(destination: ThreadView(thread: thread, apiClient: self.apiClient)) {
+            List(self.viewModel.featured, id: \.key) { thread in
+                NavigationLink(destination: ThreadView(thread: thread, viewModel: self.viewModel)) {
                     ThreadListItemView(thread: thread)
                 }
             }

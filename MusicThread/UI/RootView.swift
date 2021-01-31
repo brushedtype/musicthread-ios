@@ -16,11 +16,9 @@ struct RootView: View {
 
     var body: some View {
         TabView {
-            ThreadsTabView(apiClient: self.viewModel.apiClient, threads: self.viewModel.threads, reloadThreads: self.viewModel.fetchThreads)
-
-            BookmarksTabView(apiClient: self.viewModel.apiClient, bookmarks: self.viewModel.bookmarks)
-
-            FeaturedTabView(apiClient: self.viewModel.apiClient, featured: self.viewModel.featured)
+            ThreadsTabView(viewModel: self.viewModel)
+            BookmarksTabView(viewModel: self.viewModel)
+            FeaturedTabView(viewModel: self.viewModel)
         }
     }
 
