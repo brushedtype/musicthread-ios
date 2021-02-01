@@ -50,11 +50,11 @@ extension JSONDecoder {
 
 }
 
-struct TokenResponse: Decodable {
-    let accessToken: String
-    let expiryInterval: TimeInterval
-    let refreshToken: String
-    let tokenType: String
+public struct TokenResponse: Decodable {
+    public let accessToken: String
+    public let expiryInterval: TimeInterval
+    public let refreshToken: String
+    public let tokenType: String
 
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
@@ -64,15 +64,9 @@ struct TokenResponse: Decodable {
     }
 }
 
-struct ClientCredentials {
-    let baseURL: URL
-    let clientId: String
-    let redirectURI: String
-}
-
 extension ClientCredentials {
 
-    func generateAuthURL() -> (url: URL, state: String, codeVerfier: String) {
+    public func generateAuthURL() -> (url: URL, state: String, codeVerfier: String) {
         let codeVerfier = generateCodeVerifier()
         let codeChallenge = generateCodeChallenge(codeVerifier: codeVerfier)
 
@@ -91,7 +85,7 @@ extension ClientCredentials {
         return (components.url!, state, codeVerfier)
     }
 
-    func exchangeToken(code: String, verifier: String, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
+    public func exchangeToken(code: String, verifier: String, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
         var components = URLComponents()
         components.queryItems = [
             URLQueryItem(name: "grant_type", value: "authorization_code"),
@@ -120,7 +114,7 @@ extension ClientCredentials {
         }.resume()
     }
 
-    func refreshToken(refreshToken: String, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
+    public func refreshToken(refreshToken: String, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
         var components = URLComponents()
         components.queryItems = [
             URLQueryItem(name: "grant_type", value: "refresh_token"),

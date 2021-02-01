@@ -9,7 +9,7 @@ import Foundation
 import KeychainAccess
 import JWTDecode
 
-class TokenStore {
+public class TokenStore {
 
     typealias FetchAccessTokenCompletion = (Result<String, Error>) -> Void
 
@@ -23,13 +23,13 @@ class TokenStore {
     private var fetchAccessTokenRequests: [FetchAccessTokenCompletion] = []
 
 
-    init(authBaseURL: URL, tokenResponse: TokenResponse) {
+    public init(authBaseURL: URL, tokenResponse: TokenResponse) {
         self.baseURL = authBaseURL
         self.refreshToken = tokenResponse.refreshToken
         self.accessToken = tokenResponse.accessToken
     }
 
-    init(authBaseURL: URL, refreshToken: String) {
+    public init(authBaseURL: URL, refreshToken: String) {
         self.baseURL = authBaseURL
         self.refreshToken = refreshToken
     }

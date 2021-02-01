@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import MusicThreadAPI
 
 struct FeaturedTabView: View {
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import MusicThreadAPI
 import KeychainAccess
 
 class RootViewModel: ObservableObject {
@@ -15,14 +16,14 @@ class RootViewModel: ObservableObject {
     let keychain: Keychain
     let apiClient: API
 
-    @Published var threads: [Thread] = []
-    @Published var bookmarks: [Thread] = []
-    @Published var featured: [Thread] = []
+    @Published var threads: [MusicThreadAPI.Thread] = []
+    @Published var bookmarks: [MusicThreadAPI.Thread] = []
+    @Published var featured: [MusicThreadAPI.Thread] = []
 
 
     init(client: ClientCredentials, keychain: Keychain) {
         self.client = client
-        self.apiClient = API(baseURL: client.baseURL.appendingPathComponent("/api"), client: client, keychain: keychain)
+        self.apiClient = API(client: client, keychain: keychain)
         self.keychain = keychain
 
         if self.apiClient.isAuthenticated {
@@ -93,7 +94,7 @@ class RootViewModel: ObservableObject {
         }
     }
 
-    func isThreadBookmarked(thread: Thread) -> Bool {
+    func isThreadBookmarked(thread: MusicThreadAPI.Thread) -> Bool {
         guard self.apiClient.isAuthenticated else {
             return false
         }
@@ -101,7 +102,7 @@ class RootViewModel: ObservableObject {
         return self.bookmarks.contains(where: { $0.key == thread.key })
     }
 
-    func isThreadOwn(thread: Thread) -> Bool {
+    func isThreadOwn(thread: MusicThreadAPI.Thread) -> Bool {
         guard self.apiClient.isAuthenticated else {
             return false
         }

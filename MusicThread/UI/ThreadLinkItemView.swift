@@ -8,10 +8,11 @@
 import Foundation
 import SwiftUI
 import Kingfisher
+import MusicThreadAPI
 
 struct ThreadLinkItemView: View {
 
-    let link: Link
+    let link: MusicThreadAPI.Link
 
     var body: some View {
         SwiftUI.Link(destination: self.link.pageURL, label: {

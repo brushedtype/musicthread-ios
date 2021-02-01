@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import MusicThreadAPI
 
 struct ThreadHeaderView: View {
 
-    let thread: Thread
+    let thread: MusicThreadAPI.Thread
 
     var body: some View {
         VStack(spacing: 24.0) {

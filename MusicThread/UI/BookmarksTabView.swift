@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import MusicThreadAPI
 
 struct BookmarksTabView: View {
 
@@ -33,7 +34,7 @@ struct BookmarksTabView: View {
 
 extension ThreadView {
 
-    init(thread: Thread, viewModel: RootViewModel) {
+    init(thread: MusicThreadAPI.Thread, viewModel: RootViewModel) {
         self.init(
             thread: thread,
             isOwnThread: viewModel.isThreadOwn(thread: thread),

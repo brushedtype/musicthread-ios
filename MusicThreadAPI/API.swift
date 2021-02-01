@@ -8,7 +8,7 @@
 import Foundation
 import KeychainAccess
 
-class API {
+public class API {
 
     let baseURL: URL
     let client: ClientCredentials
@@ -16,13 +16,13 @@ class API {
 
     private var tokenStore: TokenStore?
 
-    var isAuthenticated: Bool {
+    public var isAuthenticated: Bool {
         return self.tokenStore != nil
     }
 
 
-    init(baseURL: URL, client: ClientCredentials, keychain: Keychain) {
-        self.baseURL = baseURL
+    public init(client: ClientCredentials, keychain: Keychain) {
+        self.baseURL = client.baseURL.appendingPathComponent("/api")
         self.client = client
         self.keychain = keychain
 
@@ -31,7 +31,7 @@ class API {
         }
     }
 
-    func setTokenStore(_ tokenStore: TokenStore) {
+    public func setTokenStore(_ tokenStore: TokenStore) {
         if Foundation.Thread.isMainThread {
             self.tokenStore = tokenStore
         } else {
@@ -41,7 +41,10 @@ class API {
         }
     }
 
-    func fetchThreads(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
+
+    // MARK: - Authed Requests
+
+    public func fetchThreads(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -71,7 +74,7 @@ class API {
         }
     }
 
-    func fetchBookmarks(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
+    public func fetchBookmarks(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -101,7 +104,7 @@ class API {
         }
     }
 
-    func createThread(title: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+    public func createThread(title: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -137,7 +140,7 @@ class API {
         }
     }
 
-    func updateBookmark(threadKey: String, isBookmarked: Bool, completion: @escaping (Result<UpdateBookmarkResponse, Error>) -> Void) {
+    public func updateBookmark(threadKey: String, isBookmarked: Bool, completion: @escaping (Result<UpdateBookmarkResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -173,7 +176,7 @@ class API {
         }
     }
 
-    func submitLink(threadKey: String, linkURL: String, completion: @escaping (Result<LinkResponse, Error>) -> Void) {
+    public func submitLink(threadKey: String, linkURL: String, completion: @escaping (Result<LinkResponse, Error>) -> Void) {
         guard let tokenStore = self.tokenStore else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
             return completion(.failure(err))
@@ -209,7 +212,10 @@ class API {
         }
     }
 
-    func fetchFeatured(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
+
+    // MARK: - Unauthed Requests
+
+    public func fetchFeatured(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/featured"))
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -225,7 +231,7 @@ class API {
         }.resume()
     }
 
-    func fetchThread(key: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+    public func fetchThread(key: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -243,17 +249,19 @@ class API {
 
 }
 
-struct Account: Decodable {
-    let name: String
+// MARK: - Response Types
+
+public struct Account: Decodable {
+    public let name: String
 }
 
-struct Thread: Decodable {
-    let key: String
-    let title: String
-    let description: String
-    let tags: [String]
-    let author: Account
-    let pageURL: URL
+public struct Thread: Decodable {
+    public let key: String
+    public let title: String
+    public let description: String
+    public let tags: [String]
+    public let author: Account
+    public let pageURL: URL
 
     enum CodingKeys: String, CodingKey {
         case key
@@ -265,16 +273,16 @@ struct Thread: Decodable {
     }
 }
 
-struct ThreadListResponse: Decodable {
-    let threads: [Thread]
+public struct ThreadListResponse: Decodable {
+    public let threads: [Thread]
 }
 
-struct Link: Decodable {
-    let key: String
-    let title: String
-    let artist: String
-    let thumbnailURL: URL
-    let pageURL: URL
+public struct Link: Decodable {
+    public let key: String
+    public let title: String
+    public let artist: String
+    public let thumbnailURL: URL
+    public let pageURL: URL
 
     enum CodingKeys: String, CodingKey {
         case key
@@ -285,9 +293,39 @@ struct Link: Decodable {
     }
 }
 
-struct ThreadResponse: Decodable {
-    let thread: Thread
-    let links: [Link]
+public struct ThreadResponse: Decodable {
+    public let thread: Thread
+    public let links: [Link]
+}
+
+public struct UpdateBookmarkResponse: Decodable {
+    public let isBookmarked: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case isBookmarked = "is_bookmarked"
+    }
+}
+
+
+public struct LinkResponse: Decodable {
+    public let link: Link
+
+    enum CodingKeys: String, CodingKey {
+        case link
+    }
+}
+
+
+// MARK: - Request Types
+
+struct SubmitMusicLinkRequest: Codable {
+    let threadKey: String
+    let linkURL: String
+
+    enum CodingKeys: String, CodingKey {
+        case threadKey = "thread"
+        case linkURL = "url"
+    }
 }
 
 struct CreateThreadRequest: Codable {
@@ -309,31 +347,5 @@ struct UpdateBookmarkRequest: Codable {
     enum CodingKeys: String, CodingKey {
         case threadKey = "thread"
         case isBookmarked = "is_bookmarked"
-    }
-}
-
-struct UpdateBookmarkResponse: Decodable {
-    let isBookmarked: Bool
-
-    enum CodingKeys: String, CodingKey {
-        case isBookmarked = "is_bookmarked"
-    }
-}
-
-struct SubmitMusicLinkRequest: Codable {
-    let threadKey: String
-    let linkURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case threadKey = "thread"
-        case linkURL = "url"
-    }
-}
-
-struct LinkResponse: Decodable {
-    let link: Link
-
-    enum CodingKeys: String, CodingKey {
-        case link
     }
 }

@@ -7,17 +7,18 @@
 
 import Foundation
 import SwiftUI
+import MusicThreadAPI
 
 struct ThreadView: View {
 
-    let thread: Thread
+    let thread: MusicThreadAPI.Thread
     let isOwnThread: Bool
     let bookmarkState: () -> Bool
     let reloadBookmarks: () -> Void
 
     @State var isBookmarked = false
     @State var isFetchingLinks = false
-    @State var links: [Link] = []
+    @State var links: [MusicThreadAPI.Link] = []
 
     @State var isPresentingNewLinkView = false
     @State var isSubmittingLink = false

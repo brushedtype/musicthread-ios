@@ -8,6 +8,7 @@
 import UIKit
 import AuthenticationServices
 import SwiftUI
+import MusicThreadAPI
 import KeychainAccess
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -15,13 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var authSession: ASWebAuthenticationSession?
 
-    let client = ClientCredentials(
+
+    private let client = ClientCredentials(
         baseURL: URL(string: "https://musicthread.app")!,
         clientId: "1fa875b7a58ecdf4380c9ddd2b9ab6c1",
         redirectURI: "musicthread://auth"
     )
 
-    lazy var viewModel = RootViewModel(client: self.client, keychain: Keychain(service: "co.brushedtype.musicthread"))
+    private let keychain = Keychain(service: "co.brushedtype.musicthread")
+
+    private lazy var viewModel = RootViewModel(client: self.client, keychain: self.keychain)
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
