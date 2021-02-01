@@ -60,6 +60,7 @@
 		BC2FFCDE25C80FBC00494949 /* NewLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLinkView.swift; sourceTree = "<group>"; };
 		BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMusicThreadAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2FFCFE25C8345B00494949 /* ClientCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCredentials.swift; sourceTree = "<group>"; };
+		BC2FFD0C25C837D900494949 /* MusicThread.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicThread.entitlements; sourceTree = "<group>"; };
 		BC3DADA125C5931900480220 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 		BC3DADA425C5951200480220 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BC3DADAB25C5B97700480220 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
@@ -123,6 +124,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BC2FFD0F25C837FF00494949 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BC78F29E25B49C2A00E266F8 /* LaunchScreen.storyboard */,
+				BC2FFD0C25C837D900494949 /* MusicThread.entitlements */,
+				BC78F2A125B49C2A00E266F8 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		BC3DADAA25C5B96B00480220 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,8 +178,7 @@
 				BC52CBF425C6D9DD00746627 /* RootViewModel.swift */,
 				BC3DADAA25C5B96B00480220 /* UI */,
 				BC78F29C25B49C2A00E266F8 /* Assets.xcassets */,
-				BC78F29E25B49C2A00E266F8 /* LaunchScreen.storyboard */,
-				BC78F2A125B49C2A00E266F8 /* Info.plist */,
+				BC2FFD0F25C837FF00494949 /* Supporting Files */,
 			);
 			path = MusicThread;
 			sourceTree = "<group>";
@@ -474,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MusicThread/MusicThread.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				INFOPLIST_FILE = MusicThread/Info.plist;
@@ -493,6 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MusicThread/MusicThread.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				INFOPLIST_FILE = MusicThread/Info.plist;

@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         redirectURI: "musicthread://auth"
     )
 
-    private let keychain = Keychain(service: "co.brushedtype.musicthread")
+    private let keychain = Keychain(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
 
     private lazy var viewModel = RootViewModel(client: self.client, keychain: self.keychain)
 
