@@ -173,6 +173,42 @@ class API {
         }
     }
 
+    func submitLink(threadKey: String, linkURL: String, completion: @escaping (Result<LinkResponse, Error>) -> Void) {
+        guard let tokenStore = self.tokenStore else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+            return completion(.failure(err))
+        }
+
+        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+
+            case .success(let accessToken):
+                let reqBody = SubmitMusicLinkRequest(threadKey: threadKey, linkURL: linkURL)
+
+                let jsonEncoder = JSONEncoder()
+
+                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/add-link"))
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+                request.httpMethod = "POST"
+                request.httpBody = try? jsonEncoder.encode(reqBody)
+
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    guard error == nil, let data = data else {
+                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
+                        return completion(.failure(err))
+                    }
+
+                    let jsonDecoder = JSONDecoder()
+                    let result = jsonDecoder.decodeResult(LinkResponse.self, from: data)
+
+                    completion(result)
+                }.resume()
+            }
+        }
+    }
+
     func fetchFeatured(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/featured"))
 
@@ -281,5 +317,23 @@ struct UpdateBookmarkResponse: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case isBookmarked = "is_bookmarked"
+    }
+}
+
+struct SubmitMusicLinkRequest: Codable {
+    let threadKey: String
+    let linkURL: String
+
+    enum CodingKeys: String, CodingKey {
+        case threadKey = "thread"
+        case linkURL = "url"
+    }
+}
+
+struct LinkResponse: Decodable {
+    let link: Link
+
+    enum CodingKeys: String, CodingKey {
+        case link
     }
 }

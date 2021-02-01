@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BC2FFCDB25C80A5D00494949 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFCDA25C80A5D00494949 /* JWTDecode */; };
+		BC2FFCDF25C80FBC00494949 /* NewLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFCDE25C80FBC00494949 /* NewLinkView.swift */; };
 		BC3DADA225C5931900480220 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA125C5931900480220 /* TokenStore.swift */; };
 		BC3DADA525C5951200480220 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA425C5951200480220 /* API.swift */; };
 		BC3DADAC25C5B97700480220 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAB25C5B97700480220 /* ThreadView.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC2FFCDE25C80FBC00494949 /* NewLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLinkView.swift; sourceTree = "<group>"; };
 		BC3DADA125C5931900480220 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 		BC3DADA425C5951200480220 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BC3DADAB25C5B97700480220 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				BC52CBFD25C6DD5D00746627 /* BookmarksTabView.swift */,
 				BC52CC0025C6DD7900746627 /* FeaturedTabView.swift */,
 				BC3DADAB25C5B97700480220 /* ThreadView.swift */,
+				BC2FFCDE25C80FBC00494949 /* NewLinkView.swift */,
 				BC52CC0925C6E23B00746627 /* NewThreadView.swift */,
 				BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */,
 				BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */,
@@ -216,6 +219,7 @@
 				BC52CBF525C6D9DD00746627 /* RootViewModel.swift in Sources */,
 				BCD7A97E25BED2ED007BCF8D /* Auth.swift in Sources */,
 				BC52CC0725C6DEA600746627 /* ThreadLinkItemView.swift in Sources */,
+				BC2FFCDF25C80FBC00494949 /* NewLinkView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

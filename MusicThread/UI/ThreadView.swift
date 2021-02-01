@@ -15,9 +15,11 @@ struct ThreadView: View {
     let bookmarkState: () -> Bool
     let reloadBookmarks: () -> Void
 
-    @State var isBookmarked: Bool = false
-    @State var isFetchingLinks = true
+    @State var isBookmarked = false
+    @State var isFetchingLinks = false
     @State var links: [Link] = []
+
+    @State var isPresentingNewLinkView = false
 
     let apiClient: API
 
@@ -70,6 +72,13 @@ struct ThreadView: View {
                     Image(systemName: self.isBookmarked ? "bookmark.fill" : "bookmark")
                         .imageScale(.large)
                 })
+            } else {
+                Button(action: {
+                    self.isPresentingNewLinkView = true
+                }, label: {
+                    Image(systemName: "plus")
+                        .imageScale(.large)
+                })
             }
 
             SwiftUI.Link(destination: self.thread.pageURL, label: {
@@ -80,19 +89,49 @@ struct ThreadView: View {
         })
         .onAppear(perform: {
             self.isBookmarked = self.bookmarkState()
-
-            self.apiClient.fetchThread(key: self.thread.key) { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .failure(let error):
-                        debugPrint(error)
-                    case .success(let threadResponse):
-                        self.links = threadResponse.links
-                        self.isFetchingLinks = false
+            self.reloadLinks()
+        })
+        .sheet(isPresented: self.$isPresentingNewLinkView, content: {
+            NavigationView {
+                NewLinkView { (linkURL) in
+                    self.apiClient.submitLink(threadKey: self.thread.key, linkURL: linkURL) { (result) in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .failure(let err):
+                                debugPrint(err)
+                            case .success(_):
+                                self.reloadLinks()
+                                self.isPresentingNewLinkView = false
+                            }
+                        }
                     }
+
                 }
+                .navigationTitle("Add Music")
+                .navigationBarTitleDisplayMode(.inline)
             }
         })
+    }
+
+    private func reloadLinks() {
+        guard self.isFetchingLinks == false else {
+            return
+        }
+
+        self.isFetchingLinks = true
+
+        self.apiClient.fetchThread(key: self.thread.key) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    debugPrint(error)
+                case .success(let threadResponse):
+                    self.links = threadResponse.links
+                }
+
+                self.isFetchingLinks = false
+            }
+        }
     }
 
 }
