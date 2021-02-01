@@ -11,6 +11,7 @@ import SwiftUI
 struct NewLinkView: View {
 
     @State var urlString: String = ""
+    @Binding var isSubmitting: Bool
 
     let submitAction: (String) -> Void
 
@@ -19,13 +20,21 @@ struct NewLinkView: View {
         Form {
             TextField("URL to song or album", text: self.$urlString)
         }
-        .navigationBarItems(trailing:
-            Button("Submit", action: {
-                self.submitAction(self.urlString)
-            }).disabled(self.urlString.isEmpty)
-        )
+        .navigationBarItems(trailing: self.navigationItems)
         .listStyle(PlainListStyle())
         .frame(maxWidth: .infinity)
+    }
+
+    var navigationItems: some View {
+        HStack {
+            if self.isSubmitting {
+                ProgressView()
+            } else {
+                Button("Submit", action: {
+                    self.submitAction(self.urlString)
+                }).disabled(self.urlString.isEmpty)
+            }
+        }
     }
 
 }

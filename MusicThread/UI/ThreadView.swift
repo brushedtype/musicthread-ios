@@ -20,6 +20,7 @@ struct ThreadView: View {
     @State var links: [Link] = []
 
     @State var isPresentingNewLinkView = false
+    @State var isSubmittingLink = false
 
     let apiClient: API
 
@@ -52,22 +53,27 @@ struct ThreadView: View {
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationBarItems(trailing: HStack(spacing: 20) {
+        .navigationBarItems(trailing: self.navigationBarItems)
+        .onAppear(perform: {
+            self.isBookmarked = self.bookmarkState()
+            self.reloadLinks()
+        })
+        .sheet(isPresented: self.$isPresentingNewLinkView, content: {
+            NavigationView {
+                NewLinkView(isSubmitting: self.$isSubmittingLink) { (linkURL) in
+                    self.submitLink(linkURL)
+                }
+                .navigationTitle("Add Music")
+                .navigationBarTitleDisplayMode(.inline)
+            }
+        })
+    }
+
+    var navigationBarItems: some View {
+        HStack(spacing: 20) {
             if self.isOwnThread == false {
                 Button(action: {
-                    let isBookmarked = self.isBookmarked
-
-                    self.apiClient.updateBookmark(threadKey: self.thread.key, isBookmarked: !isBookmarked) { (result) in
-                        DispatchQueue.main.async {
-                            switch result {
-                            case .failure(let error):
-                                debugPrint(error)
-                            case .success(let response):
-                                self.isBookmarked = response.isBookmarked
-                            }
-                            self.reloadBookmarks()
-                        }
-                    }
+                    self.updateBookmark(newState: !self.isBookmarked)
                 }, label: {
                     Image(systemName: self.isBookmarked ? "bookmark.fill" : "bookmark")
                         .imageScale(.large)
@@ -86,32 +92,9 @@ struct ThreadView: View {
                     .imageScale(.large)
                     .accessibility(hint: Text("Open in Safari"))
             })
-        })
-        .onAppear(perform: {
-            self.isBookmarked = self.bookmarkState()
-            self.reloadLinks()
-        })
-        .sheet(isPresented: self.$isPresentingNewLinkView, content: {
-            NavigationView {
-                NewLinkView { (linkURL) in
-                    self.apiClient.submitLink(threadKey: self.thread.key, linkURL: linkURL) { (result) in
-                        DispatchQueue.main.async {
-                            switch result {
-                            case .failure(let err):
-                                debugPrint(err)
-                            case .success(_):
-                                self.reloadLinks()
-                                self.isPresentingNewLinkView = false
-                            }
-                        }
-                    }
-
-                }
-                .navigationTitle("Add Music")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-        })
+        }
     }
+
 
     private func reloadLinks() {
         guard self.isFetchingLinks == false else {
@@ -130,6 +113,42 @@ struct ThreadView: View {
                 }
 
                 self.isFetchingLinks = false
+            }
+        }
+    }
+
+    private func submitLink(_ linkURL: String) {
+        guard self.isSubmittingLink == false else {
+            return
+        }
+
+        self.isSubmittingLink = true
+
+        self.apiClient.submitLink(threadKey: self.thread.key, linkURL: linkURL) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let err):
+                    debugPrint(err)
+                case .success(_):
+                    self.reloadLinks()
+                    self.isPresentingNewLinkView = false
+                }
+
+                self.isSubmittingLink = false
+            }
+        }
+    }
+
+    private func updateBookmark(newState: Bool) {
+        self.apiClient.updateBookmark(threadKey: self.thread.key, isBookmarked: newState) { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    debugPrint(error)
+                case .success(let response):
+                    self.isBookmarked = response.isBookmarked
+                }
+                self.reloadBookmarks()
             }
         }
     }
