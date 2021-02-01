@@ -16,6 +16,10 @@
 		BC2FFCFF25C8345B00494949 /* ClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFCFE25C8345B00494949 /* ClientCredentials.swift */; };
 		BC2FFD0325C835D100494949 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFD0225C835D100494949 /* KeychainAccess */; };
 		BC2FFD0925C8369800494949 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFD0825C8369800494949 /* JWTDecode */; };
+		BC2FFD2025C8392600494949 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC2FFD1625C8392600494949 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BC2FFD3F25C839D300494949 /* MainInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFD3E25C839D300494949 /* MainInterfaceController.swift */; };
+		BC2FFD5725C83C4300494949 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC2FFD5625C83C4300494949 /* Assets.xcassets */; };
+		BC2FFD9C25C8492A00494949 /* libMusicThreadAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */; };
 		BC3DADAC25C5B97700480220 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAB25C5B97700480220 /* ThreadView.swift */; };
 		BC3DADB025C5B99C00480220 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAF25C5B99C00480220 /* RootView.swift */; };
 		BC3DADB325C5B9E800480220 /* ThreadListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */; };
@@ -42,6 +46,20 @@
 			remoteGlobalIDString = BC2FFCE525C833E000494949;
 			remoteInfo = MusicThreadAPI;
 		};
+		BC2FFD1E25C8392600494949 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC78F28825B49C2900E266F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC2FFD1525C8392600494949;
+			remoteInfo = ShareExtension;
+		};
+		BC2FFD9A25C8492300494949 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC78F28825B49C2900E266F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC2FFCE525C833E000494949;
+			remoteInfo = MusicThreadAPI;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,6 +72,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC2FFD2425C8392600494949 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BC2FFD2025C8392600494949 /* ShareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +90,11 @@
 		BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMusicThreadAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2FFCFE25C8345B00494949 /* ClientCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCredentials.swift; sourceTree = "<group>"; };
 		BC2FFD0C25C837D900494949 /* MusicThread.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicThread.entitlements; sourceTree = "<group>"; };
+		BC2FFD1625C8392600494949 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC2FFD1D25C8392600494949 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC2FFD3E25C839D300494949 /* MainInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInterfaceController.swift; sourceTree = "<group>"; };
+		BC2FFD5225C83B9100494949 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		BC2FFD5625C83C4300494949 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC3DADA125C5931900480220 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 		BC3DADA425C5951200480220 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BC3DADAB25C5B97700480220 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
@@ -89,6 +123,14 @@
 			files = (
 				BC2FFD0925C8369800494949 /* JWTDecode in Frameworks */,
 				BC2FFD0325C835D100494949 /* KeychainAccess in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC2FFD1325C8392600494949 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC2FFD9C25C8492A00494949 /* libMusicThreadAPI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +176,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BC2FFD1725C8392600494949 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				BC2FFD5225C83B9100494949 /* ShareExtension.entitlements */,
+				BC2FFD5625C83C4300494949 /* Assets.xcassets */,
+				BC2FFD1D25C8392600494949 /* Info.plist */,
+				BC2FFD3E25C839D300494949 /* MainInterfaceController.swift */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
 		BC3DADAA25C5B96B00480220 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +209,7 @@
 			children = (
 				BC78F29225B49C2900E266F8 /* MusicThread */,
 				BC2FFCE725C833E000494949 /* MusicThreadAPI */,
+				BC2FFD1725C8392600494949 /* ShareExtension */,
 				BC78F29125B49C2900E266F8 /* Products */,
 				BC2FFCFA25C8344600494949 /* Frameworks */,
 			);
@@ -166,6 +220,7 @@
 			children = (
 				BC78F29025B49C2900E266F8 /* MusicThread.app */,
 				BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */,
+				BC2FFD1625C8392600494949 /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -207,6 +262,24 @@
 			productReference = BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		BC2FFD1525C8392600494949 /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC2FFD2125C8392600494949 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				BC2FFD1225C8392600494949 /* Sources */,
+				BC2FFD1325C8392600494949 /* Frameworks */,
+				BC2FFD1425C8392600494949 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BC2FFD9B25C8492300494949 /* PBXTargetDependency */,
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = BC2FFD1625C8392600494949 /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BC78F28F25B49C2900E266F8 /* MusicThread */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC78F2A425B49C2A00E266F8 /* Build configuration list for PBXNativeTarget "MusicThread" */;
@@ -214,11 +287,13 @@
 				BC78F28C25B49C2900E266F8 /* Sources */,
 				BC78F28D25B49C2900E266F8 /* Frameworks */,
 				BC78F28E25B49C2900E266F8 /* Resources */,
+				BC2FFD2425C8392600494949 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				BC2FFCF925C8343D00494949 /* PBXTargetDependency */,
+				BC2FFD1F25C8392600494949 /* PBXTargetDependency */,
 			);
 			name = MusicThread;
 			packageProductDependencies = (
@@ -240,6 +315,9 @@
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					BC2FFCE525C833E000494949 = {
+						CreatedOnToolsVersion = 12.3;
+					};
+					BC2FFD1525C8392600494949 = {
 						CreatedOnToolsVersion = 12.3;
 					};
 					BC78F28F25B49C2900E266F8 = {
@@ -267,11 +345,20 @@
 			targets = (
 				BC78F28F25B49C2900E266F8 /* MusicThread */,
 				BC2FFCE525C833E000494949 /* MusicThreadAPI */,
+				BC2FFD1525C8392600494949 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BC2FFD1425C8392600494949 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC2FFD5725C83C4300494949 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC78F28E25B49C2900E266F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +379,14 @@
 				BC2FFCF125C833E900494949 /* API.swift in Sources */,
 				BC2FFCF025C833E900494949 /* TokenStore.swift in Sources */,
 				BC2FFCFF25C8345B00494949 /* ClientCredentials.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC2FFD1225C8392600494949 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC2FFD3F25C839D300494949 /* MainInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +417,16 @@
 			isa = PBXTargetDependency;
 			target = BC2FFCE525C833E000494949 /* MusicThreadAPI */;
 			targetProxy = BC2FFCF825C8343D00494949 /* PBXContainerItemProxy */;
+		};
+		BC2FFD1F25C8392600494949 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC2FFD1525C8392600494949 /* ShareExtension */;
+			targetProxy = BC2FFD1E25C8392600494949 /* PBXContainerItemProxy */;
+		};
+		BC2FFD9B25C8492300494949 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC2FFCE525C833E000494949 /* MusicThreadAPI */;
+			targetProxy = BC2FFD9A25C8492300494949 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -356,6 +461,46 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BC2FFD2225C8392600494949 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UMVF6688JY;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.brushedtype.musicthread.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BC2FFD2325C8392600494949 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UMVF6688JY;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = co.brushedtype.musicthread.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -482,6 +627,7 @@
 		BC78F2A525B49C2A00E266F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MusicThread/MusicThread.entitlements;
@@ -502,6 +648,7 @@
 		BC78F2A625B49C2A00E266F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MusicThread/MusicThread.entitlements;
@@ -527,6 +674,15 @@
 			buildConfigurations = (
 				BC2FFCEB25C833E000494949 /* Debug */,
 				BC2FFCEC25C833E000494949 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC2FFD2125C8392600494949 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC2FFD2225C8392600494949 /* Debug */,
+				BC2FFD2325C8392600494949 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -29,9 +29,14 @@ public class TokenStore {
         self.accessToken = tokenResponse.accessToken
     }
 
-    public init(authBaseURL: URL, refreshToken: String) {
+    public init(authBaseURL: URL, accessToken: String?, refreshToken: String) {
         self.baseURL = authBaseURL
         self.refreshToken = refreshToken
+
+        if let accessToken = accessToken, let jwt = try? decode(jwt: accessToken), let expirationDate = jwt.expiresAt {
+            self.accessToken = accessToken
+            self.tokenExpirationDate = expirationDate
+        }
     }
 
 
@@ -81,6 +86,7 @@ public class TokenStore {
                         self.accessToken = response.accessToken
                         self.tokenExpirationDate = jwt.expiresAt ?? Date().addingTimeInterval(60 * 60)
 
+                        try? keychain.set(response.accessToken, key: "access_token")
                         try? keychain.set(response.refreshToken, key: "refresh_token")
 
                         res = .success(response.accessToken)

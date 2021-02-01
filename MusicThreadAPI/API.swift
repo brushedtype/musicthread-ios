@@ -27,7 +27,9 @@ public class API {
         self.keychain = keychain
 
         if let refreshToken = try? self.keychain.get("refresh_token") {
-            self.setTokenStore(TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), refreshToken: refreshToken))
+            let accessToken = try? self.keychain.get("access_token")
+            let tokenStore = TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), accessToken: accessToken, refreshToken: refreshToken)
+            self.setTokenStore(tokenStore)
         }
     }
 
