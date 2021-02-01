@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC2FFCDB25C80A5D00494949 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFCDA25C80A5D00494949 /* JWTDecode */; };
 		BC3DADA225C5931900480220 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA125C5931900480220 /* TokenStore.swift */; };
 		BC3DADA525C5951200480220 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA425C5951200480220 /* API.swift */; };
 		BC3DADAC25C5B97700480220 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADAB25C5B97700480220 /* ThreadView.swift */; };
@@ -57,6 +58,7 @@
 			files = (
 				BC52CBF125C6CAED00746627 /* Kingfisher in Frameworks */,
 				BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */,
+				BC2FFCDB25C80A5D00494949 /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +141,7 @@
 			packageProductDependencies = (
 				BC695CC925C5FCF90003AA2B /* KeychainAccess */,
 				BC52CBF025C6CAED00746627 /* Kingfisher */,
+				BC2FFCDA25C80A5D00494949 /* JWTDecode */,
 			);
 			productName = "MusicThread Auth";
 			productReference = BC78F29025B49C2900E266F8 /* MusicThread.app */;
@@ -170,6 +173,7 @@
 			packageReferences = (
 				BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
 			);
 			productRefGroup = BC78F29125B49C2900E266F8 /* Products */;
 			projectDirPath = "";
@@ -407,6 +411,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
 		BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:onevcat/Kingfisher.git";
@@ -426,6 +438,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BC2FFCDA25C80A5D00494949 /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
 		BC52CBF025C6CAED00746627 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */;

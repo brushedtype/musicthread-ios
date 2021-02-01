@@ -7,6 +7,7 @@
 
 import Foundation
 import KeychainAccess
+import JWTDecode
 
 class TokenStore {
 
@@ -16,6 +17,8 @@ class TokenStore {
 
     private var refreshToken: String
     private var accessToken: String?
+
+    private var tokenExpirationDate: Date = .distantPast
 
     private var fetchAccessTokenRequests: [FetchAccessTokenCompletion] = []
 
@@ -32,8 +35,19 @@ class TokenStore {
     }
 
 
+    private func isTokenExpired() -> Bool {
+        guard self.accessToken != nil else {
+            return true
+        }
+
+        let leeway: TimeInterval = 120 // refresh token 2 minutes before real expiry
+        let remainingTime = self.tokenExpirationDate.timeIntervalSinceNow
+
+        return remainingTime <= leeway
+    }
+
     func fetchAccessToken(client: ClientCredentials, keychain: Keychain, completion: @escaping FetchAccessTokenCompletion) {
-        if let token = self.accessToken {
+        if let token = self.accessToken, self.isTokenExpired() == false {
             return completion(.success(token))
         }
 
@@ -55,12 +69,22 @@ class TokenStore {
                     res = .failure(err)
 
                 case .success(let response):
-                    self.refreshToken = response.refreshToken
-                    self.accessToken = response.accessToken
+                    let jwtResult = Result(catching: { try decode(jwt: response.accessToken) })
 
-                    try? keychain.set(response.refreshToken, key: "refresh_token")
+                    switch jwtResult {
+                    case .failure(let err):
+                        try? keychain.remove("refresh_token")
+                        res = .failure(err)
 
-                    res = .success(response.accessToken)
+                    case .success(let jwt):
+                        self.refreshToken = response.refreshToken
+                        self.accessToken = response.accessToken
+                        self.tokenExpirationDate = jwt.expiresAt ?? Date().addingTimeInterval(60 * 60)
+
+                        try? keychain.set(response.refreshToken, key: "refresh_token")
+
+                        res = .success(response.accessToken)
+                    }
                 }
 
                 for request in self.fetchAccessTokenRequests {
