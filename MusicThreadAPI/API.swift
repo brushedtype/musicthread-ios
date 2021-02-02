@@ -14,10 +14,10 @@ public class API {
     let client: ClientCredentials
     let keychain: Keychain
 
-    private var tokenStore: TokenStore?
+    private let tokenStore: TokenStore
 
     public var isAuthenticated: Bool {
-        return self.tokenStore != nil
+        return self.tokenStore.isAuthenticated
     }
 
 
@@ -25,20 +25,16 @@ public class API {
         self.baseURL = client.baseURL.appendingPathComponent("/api")
         self.client = client
         self.keychain = keychain
+        self.tokenStore = TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), keychain: keychain)
 
-        if let refreshToken = try? self.keychain.get("refresh_token") {
-            let accessToken = try? self.keychain.get("access_token")
-            let tokenStore = TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), accessToken: accessToken, refreshToken: refreshToken)
-            self.setTokenStore(tokenStore)
-        }
     }
 
-    public func setTokenStore(_ tokenStore: TokenStore) {
+    public func setAuth(_ tokenResponse: TokenResponse) throws {
         if Foundation.Thread.isMainThread {
-            self.tokenStore = tokenStore
+            try self.tokenStore.setAuth(tokenResponse)
         } else {
-            DispatchQueue.main.sync {
-                self.tokenStore = tokenStore
+            try DispatchQueue.main.sync {
+                try self.tokenStore.setAuth(tokenResponse)
             }
         }
     }
@@ -47,12 +43,12 @@ public class API {
     // MARK: - Authed Requests
 
     public func fetchThreads(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
-        guard let tokenStore = self.tokenStore else {
-            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+        guard self.isAuthenticated else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -77,12 +73,12 @@ public class API {
     }
 
     public func fetchBookmarks(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
-        guard let tokenStore = self.tokenStore else {
-            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+        guard self.isAuthenticated else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -107,12 +103,12 @@ public class API {
     }
 
     public func createThread(title: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
-        guard let tokenStore = self.tokenStore else {
-            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+        guard self.isAuthenticated else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -143,12 +139,12 @@ public class API {
     }
 
     public func updateBookmark(threadKey: String, isBookmarked: Bool, completion: @escaping (Result<UpdateBookmarkResponse, Error>) -> Void) {
-        guard let tokenStore = self.tokenStore else {
-            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+        guard self.isAuthenticated else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -179,12 +175,12 @@ public class API {
     }
 
     public func submitLink(threadKey: String, linkURL: String, completion: @escaping (Result<LinkResponse, Error>) -> Void) {
-        guard let tokenStore = self.tokenStore else {
-            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth: tokenStore was not set"])
+        guard self.isAuthenticated else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             return completion(.failure(err))
         }
 
-        tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))

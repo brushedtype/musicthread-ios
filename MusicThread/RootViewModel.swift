@@ -34,9 +34,7 @@ class RootViewModel: ObservableObject {
     }
 
     func setAuth(tokenResponse: TokenResponse) {
-        try? self.keychain.set(tokenResponse.refreshToken, key: "refresh_token")
-
-        self.apiClient.setTokenStore(TokenStore(authBaseURL: self.client.baseURL.appendingPathComponent("/oauth"), tokenResponse: tokenResponse))
+        try? self.apiClient.setAuth(tokenResponse)
 
         self.fetchThreads()
         self.fetchBookmarks()
