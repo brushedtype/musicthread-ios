@@ -31,11 +31,13 @@
       "size" : "40x40"
     },
     {
+      "filename" : "AppIcon-Modern-Internal-60@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "AppIcon-Modern-Internal-60@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
@@ -71,21 +73,25 @@
       "size" : "40x40"
     },
     {
+      "filename" : "AppIcon-Modern-Internal-76.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
     },
     {
+      "filename" : "AppIcon-Modern-Internal-76@2x.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
+      "filename" : "AppIcon-Modern-Internal-83.5@2x.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "83.5x83.5"
     },
     {
+      "filename" : "AppIcon-Modern-Internal-512@2x.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
