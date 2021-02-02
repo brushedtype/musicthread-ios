@@ -31,6 +31,7 @@
 			<key>IntentsSupported</key>
 			<array>
 				<string>AddLinkIntent</string>
+				<string>CreateThreadIntent</string>
 				<string>ListThreadsIntent</string>
 			</array>
 		</dict>

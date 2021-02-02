@@ -60,7 +60,7 @@ struct ThreadsTabView: View {
 
         self.isSubmittingNewThread = true
 
-        self.viewModel.apiClient.createThread(title: title) { (result) in
+        self.viewModel.apiClient.createThread(title: title, description: nil, tags: []) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):

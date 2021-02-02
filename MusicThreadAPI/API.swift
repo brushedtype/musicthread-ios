@@ -102,7 +102,7 @@ public class API {
         }
     }
 
-    public func createThread(title: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
+    public func createThread(title: String, description: String?, tags: [String], completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
         guard self.isAuthenticated else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             return completion(.failure(err))
@@ -114,7 +114,7 @@ public class API {
                 completion(.failure(error))
 
             case .success(let accessToken):
-                let reqBody = CreateThreadRequest(title: title, description: "", tags: [])
+                let reqBody = CreateThreadRequest(title: title, description: description ?? "", tags: tags)
 
                 let jsonEncoder = JSONEncoder()
 

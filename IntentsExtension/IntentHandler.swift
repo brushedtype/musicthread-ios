@@ -33,6 +33,24 @@ class IntentHandler: INExtension {
     
 }
 
+extension IntentsExtension.Thread {
+    convenience init(thread: MusicThreadAPI.Thread) {
+        self.init(identifier: thread.key, display: thread.title)
+        self.title = thread.title
+        self.threadDescription = thread.description
+        self.tags = thread.tags
+        self.pageURL = thread.pageURL
+    }
+}
+extension IntentsExtension.Link {
+    convenience init(link: MusicThreadAPI.Link) {
+        self.init(identifier: link.key, display: "\(link.title) — \(link.artist)")
+        self.title = link.title
+        self.artist = link.artist
+        self.pageURL = link.pageURL
+    }
+}
+
 extension IntentHandler: ListThreadsIntentHandling {
 
     func handle(intent: ListThreadsIntent, completion: @escaping (ListThreadsIntentResponse) -> Void) {
@@ -42,7 +60,7 @@ extension IntentHandler: ListThreadsIntentHandling {
                 completion(ListThreadsIntentResponse(code: .failure, userActivity: nil))
             case .success(let response):
                 let intentResponse = ListThreadsIntentResponse(code: .success, userActivity: nil)
-                intentResponse.threads = response.threads.map({ IntentsExtension.Thread(identifier: $0.key, display: $0.title) })
+                intentResponse.threads = response.threads.map(IntentsExtension.Thread.init(thread:))
 
                 completion(intentResponse)
             }
@@ -68,8 +86,29 @@ extension IntentHandler: AddLinkIntentHandling {
                 completion(AddLinkIntentResponse(code: .failure, userActivity: nil))
             case .success(let response):
                 let intentResponse = AddLinkIntentResponse(code: .success, userActivity: nil)
-                intentResponse.link = IntentsExtension.Link(identifier: response.link.key, display: "\(response.link.title) — \(response.link.artist)")
-                intentResponse.link?.pageURL = response.link.pageURL
+                intentResponse.link = IntentsExtension.Link(link: response.link)
+
+                completion(intentResponse)
+            }
+        }
+    }
+
+}
+
+extension IntentHandler: CreateThreadIntentHandling {
+
+    func handle(intent: CreateThreadIntent, completion: @escaping (CreateThreadIntentResponse) -> Void) {
+        guard let title = intent.title else {
+            return completion(CreateThreadIntentResponse(code: .failure, userActivity: nil))
+        }
+
+        API.shared.createThread(title: title, description: intent.threadDescription, tags: intent.tags ?? []) { (result) in
+            switch result {
+            case .failure(_):
+                completion(CreateThreadIntentResponse(code: .failure, userActivity: nil))
+            case .success(let response):
+                let intentResponse = CreateThreadIntentResponse(code: .success, userActivity: nil)
+                intentResponse.thread = IntentsExtension.Thread(thread: response.thread)
 
                 completion(intentResponse)
             }

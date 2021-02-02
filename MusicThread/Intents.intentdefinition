@@ -97,17 +97,19 @@
 		</dict>
 		<dict>
 			<key>INIntentCategory</key>
-			<string>generic</string>
+			<string>create</string>
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
 			<string>Add link to thread</string>
 			<key>INIntentDescriptionID</key>
 			<string>XUDHlE</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
 			<key>INIntentInput</key>
 			<string>thread</string>
 			<key>INIntentKeyParameter</key>
-			<string>thread</string>
+			<string>url</string>
 			<key>INIntentLastParameterTag</key>
 			<integer>4</integer>
 			<key>INIntentManagedParameterCombinations</key>
@@ -126,20 +128,6 @@
 			</dict>
 			<key>INIntentName</key>
 			<string>AddLink</string>
-			<key>INIntentParameterCombinations</key>
-			<dict>
-				<key>thread,url</key>
-				<dict>
-					<key>INIntentParameterCombinationIsLinked</key>
-					<true/>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
-					<true/>
-					<key>INIntentParameterCombinationTitle</key>
-					<string>Add ${url} to ${thread}</string>
-					<key>INIntentParameterCombinationTitleID</key>
-					<string>Ov32uC</string>
-				</dict>
-			</dict>
 			<key>INIntentParameters</key>
 			<array>
 				<dict>
@@ -257,7 +245,209 @@
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>
-			<string>Do</string>
+			<string>Add</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>create</string>
+			<key>INIntentConfigurable</key>
+			<true/>
+			<key>INIntentDescription</key>
+			<string>Create a new Thread</string>
+			<key>INIntentDescriptionID</key>
+			<string>7EQ8by</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentInput</key>
+			<string>title</string>
+			<key>INIntentKeyParameter</key>
+			<string>title</string>
+			<key>INIntentLastParameterTag</key>
+			<integer>4</integer>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key>title,threadDescription,tags</key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Create Thread named ${title}</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>XXTd0g</string>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentName</key>
+			<string>CreateThread</string>
+			<key>INIntentParameters</key>
+			<array>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Title</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>Z2Q0z8</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>Sentences</string>
+						<key>INIntentParameterMetadataDefaultValueID</key>
+						<string>YNXGRF</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>title</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>1</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Description</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>3pajmb</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>Sentences</string>
+						<key>INIntentParameterMetadataDefaultValueID</key>
+						<string>4qmmwF</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>threadDescription</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>2</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Tags</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>leLfSL</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>3</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>Sentences</string>
+						<key>INIntentParameterMetadataDefaultValueID</key>
+						<string>sGmCry</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>tags</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsMultipleValues</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>4</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
+				</dict>
+			</array>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>2</integer>
+				<key>INIntentResponseOutput</key>
+				<string>thread</string>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Thread</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>rUbpea</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>thread</string>
+						<key>INIntentResponseParameterObjectType</key>
+						<string>Thread</string>
+						<key>INIntentResponseParameterObjectTypeNamespace</key>
+						<string>2ylMgL</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>2</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>Object</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Create Thread</string>
+			<key>INIntentTitleID</key>
+			<string>xol7Ho</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Create</string>
 		</dict>
 	</array>
 	<key>INTypes</key>
@@ -268,7 +458,7 @@
 			<key>INTypeDisplayNameID</key>
 			<string>dEXZ27</string>
 			<key>INTypeLastPropertyTag</key>
-			<integer>99</integer>
+			<integer>105</integer>
 			<key>INTypeName</key>
 			<string>Thread</string>
 			<key>INTypeProperties</key>
@@ -298,10 +488,24 @@
 					<string>String</string>
 				</dict>
 				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Title</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>SeBftP</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>title</string>
+					<key>INTypePropertyTag</key>
+					<integer>103</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
 					<key>INTypePropertyDefault</key>
 					<true/>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>3</integer>
+					<integer>4</integer>
 					<key>INTypePropertyName</key>
 					<string>pronunciationHint</string>
 					<key>INTypePropertyTag</key>
@@ -313,7 +517,7 @@
 					<key>INTypePropertyDefault</key>
 					<true/>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>4</integer>
+					<integer>5</integer>
 					<key>INTypePropertyName</key>
 					<string>alternativeSpeakableMatches</string>
 					<key>INTypePropertySupportsMultipleValues</key>
@@ -323,6 +527,50 @@
 					<key>INTypePropertyType</key>
 					<string>SpeakableString</string>
 				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Description</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>2clgV4</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>6</integer>
+					<key>INTypePropertyName</key>
+					<string>threadDescription</string>
+					<key>INTypePropertyTag</key>
+					<integer>100</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Tags</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>hWD5zi</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>7</integer>
+					<key>INTypePropertyName</key>
+					<string>tags</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>102</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Page URL</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>HVbkJZ</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>8</integer>
+					<key>INTypePropertyName</key>
+					<string>pageURL</string>
+					<key>INTypePropertyTag</key>
+					<integer>105</integer>
+					<key>INTypePropertyType</key>
+					<string>URL</string>
+				</dict>
 			</array>
 		</dict>
 		<dict>
@@ -331,7 +579,7 @@
 			<key>INTypeDisplayNameID</key>
 			<string>13OQdq</string>
 			<key>INTypeLastPropertyTag</key>
-			<integer>101</integer>
+			<integer>103</integer>
 			<key>INTypeName</key>
 			<string>Link</string>
 			<key>INTypeProperties</key>
@@ -361,10 +609,38 @@
 					<string>String</string>
 				</dict>
 				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Title</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>wTfUPZ</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>title</string>
+					<key>INTypePropertyTag</key>
+					<integer>102</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDisplayName</key>
+					<string>Artist</string>
+					<key>INTypePropertyDisplayNameID</key>
+					<string>EbzSJc</string>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>artist</string>
+					<key>INTypePropertyTag</key>
+					<integer>103</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
 					<key>INTypePropertyDefault</key>
 					<true/>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>3</integer>
+					<integer>5</integer>
 					<key>INTypePropertyName</key>
 					<string>pronunciationHint</string>
 					<key>INTypePropertyTag</key>
@@ -376,7 +652,7 @@
 					<key>INTypePropertyDefault</key>
 					<true/>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>4</integer>
+					<integer>6</integer>
 					<key>INTypePropertyName</key>
 					<string>alternativeSpeakableMatches</string>
 					<key>INTypePropertySupportsMultipleValues</key>
@@ -392,7 +668,7 @@
 					<key>INTypePropertyDisplayNameID</key>
 					<string>k1r5Fa</string>
 					<key>INTypePropertyDisplayPriority</key>
-					<integer>5</integer>
+					<integer>7</integer>
 					<key>INTypePropertyName</key>
 					<string>pageURL</string>
 					<key>INTypePropertyTag</key>
