@@ -49,7 +49,7 @@ public class TokenStore {
     }
 
 
-    func fetchAccessToken(client: ClientCredentials, keychain: Keychain, completion: @escaping FetchAccessTokenCompletion) {
+    func fetchAccessToken(client: ClientCredentials, completion: @escaping FetchAccessTokenCompletion) {
         if let token = self.accessToken, self.isAccessTokenExpired == false {
             return completion(.success(token))
         }
@@ -72,7 +72,7 @@ public class TokenStore {
 
                 switch result {
                 case .failure(let err):
-                    try? keychain.remove("refresh_token")
+                    try? self.keychain.remove("refresh_token")
 
                     res = .failure(err)
 

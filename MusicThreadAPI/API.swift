@@ -48,7 +48,7 @@ public class API {
             return completion(.failure(err))
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -78,7 +78,7 @@ public class API {
             return completion(.failure(err))
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -108,7 +108,7 @@ public class API {
             return completion(.failure(err))
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -144,7 +144,7 @@ public class API {
             return completion(.failure(err))
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -180,7 +180,7 @@ public class API {
             return completion(.failure(err))
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client, keychain: self.keychain) { (result) in
+        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -230,19 +230,25 @@ public class API {
     }
 
     public func fetchThread(key: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
-        let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
+        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
+            var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
 
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard error == nil, let data = data else {
-                let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                return completion(.failure(err))
+            if case .success(let accessToken) = result {
+                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
             }
 
-            let jsonDecoder = JSONDecoder()
-            let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard error == nil, let data = data else {
+                    let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
+                    return completion(.failure(err))
+                }
 
-            completion(result)
-        }.resume()
+                let jsonDecoder = JSONDecoder()
+                let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
+
+                completion(result)
+            }.resume()
+        }
     }
 
 }
@@ -258,6 +264,7 @@ public struct Thread: Decodable {
     public let title: String
     public let description: String
     public let tags: [String]
+    public let isPrivate: Bool
     public let author: Account
     public let pageURL: URL
 
@@ -266,6 +273,7 @@ public struct Thread: Decodable {
         case title
         case description
         case tags
+        case isPrivate = "is_private"
         case author
         case pageURL = "page_url"
     }

@@ -29,7 +29,14 @@ struct ThreadView: View {
     var body: some View {
         List {
             Section(header: ThreadHeaderView(thread: self.thread).textCase(nil)) {
-                if self.isFetchingLinks {
+                if self.thread.isPrivate && self.isOwnThread == false {
+                    VStack {
+                        Text("This thread is private.")
+                            .foregroundColor(Color(.placeholderText))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical, 10)
+                } else if self.isFetchingLinks {
                     VStack {
                         HStack(spacing: 16) {
                             ProgressView()
@@ -56,6 +63,10 @@ struct ThreadView: View {
         .listStyle(GroupedListStyle())
         .navigationBarItems(trailing: self.navigationBarItems)
         .onAppear(perform: {
+            if self.thread.isPrivate && self.isOwnThread == false {
+                return
+            }
+
             self.isBookmarked = self.bookmarkState()
             self.reloadLinks()
         })
