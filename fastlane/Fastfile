@@ -18,7 +18,12 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    build_app(scheme: "MusicThread")
+    build_app(
+      scheme: "MusicThread",
+      clean: true,
+      xcargs: "-allowProvisioningUpdates"
+    )
+
     upload_to_testflight
   end
 end
