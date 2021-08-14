@@ -9,7 +9,7 @@ import Foundation
 import KeychainAccess
 import JWTDecode
 
-public class TokenStore {
+public actor TokenStore {
 
     typealias FetchAccessTokenCompletion = (Result<String, Error>) -> Void
 
@@ -35,7 +35,7 @@ public class TokenStore {
         return self.refreshToken != nil
     }
 
-    private var fetchAccessTokenRequests: [FetchAccessTokenCompletion] = []
+    private var fetchAccessTokenRequests: Task<String, Error>?
 
 
     public init(authBaseURL: URL, keychain: Keychain) {
@@ -49,46 +49,36 @@ public class TokenStore {
     }
 
 
-    func fetchAccessToken(client: ClientCredentials, completion: @escaping FetchAccessTokenCompletion) {
+    func fetchAccessToken(client: ClientCredentials) async throws -> String {
         if let token = self.accessToken, self.isAccessTokenExpired == false {
-            return completion(.success(token))
+            return token
         }
 
-        DispatchQueue.main.async {
-            guard let refreshToken = self.refreshToken else {
-                let error = NSError(domain: "co.brushedtype.musicthread", code: -2222, userInfo: [NSLocalizedDescriptionKey: "No refreshToken set"])
-                return completion(.failure(error))
-            }
+        guard let refreshToken = self.refreshToken else {
+            let error = NSError(domain: "co.brushedtype.musicthread", code: -2222, userInfo: [NSLocalizedDescriptionKey: "No refreshToken set"])
+            throw error
+        }
 
-            guard self.fetchAccessTokenRequests.isEmpty else {
-                self.fetchAccessTokenRequests.append(completion)
-                return
-            }
+        if let activeRequest = self.fetchAccessTokenRequests {
+            return try await activeRequest.value
+        }
 
-            self.fetchAccessTokenRequests.append(completion)
+        let task = Task<String, Error> {
+            self.fetchAccessTokenRequests = nil
 
-            client.refreshToken(refreshToken: refreshToken) { (result) in
-                let res: Result<String, Error>
-
-                switch result {
-                case .failure(let err):
-                    try? self.keychain.remove("refresh_token")
-
-                    res = .failure(err)
-
-                case .success(let response):
-                    try? self.setAuth(response)
-
-                    res = .success(response.accessToken)
-                }
-
-                for request in self.fetchAccessTokenRequests {
-                    request(res)
-                }
-
-                self.fetchAccessTokenRequests = []
+            do {
+                let response = try await client.refreshToken(refreshToken: refreshToken)
+                try? self.setAuth(response)
+                return response.accessToken
+            } catch {
+                try? self.keychain.remove("refresh_token")
+                throw error
             }
         }
+
+        self.fetchAccessTokenRequests = task
+
+        return try await task.value
     }
 
 }

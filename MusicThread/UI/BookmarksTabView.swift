@@ -21,6 +21,7 @@ struct BookmarksTabView: View {
                     ThreadListItemView(thread: thread)
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationTitle("Bookmarks")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -34,11 +35,12 @@ struct BookmarksTabView: View {
 
 extension ThreadView {
 
+    @MainActor
     init(thread: MusicThreadAPI.Thread, viewModel: RootViewModel) {
         self.init(
             thread: thread,
             isOwnThread: viewModel.isThreadOwn(thread: thread),
-            bookmarkState: { viewModel.isThreadBookmarked(thread: thread) },
+            bookmarkState: { await viewModel.isThreadBookmarked(thread: thread) },
             reloadBookmarks: viewModel.fetchBookmarks,
             apiClient: viewModel.apiClient
         )

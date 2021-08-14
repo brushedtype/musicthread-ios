@@ -10,101 +10,70 @@ import SwiftUI
 import MusicThreadAPI
 import KeychainAccess
 
-class RootViewModel: ObservableObject {
+actor RootViewModel: ObservableObject {
 
     let client: ClientCredentials
     let keychain: Keychain
     let apiClient: API
 
-    @Published var threads: [MusicThreadAPI.Thread] = []
-    @Published var bookmarks: [MusicThreadAPI.Thread] = []
-    @Published var featured: [MusicThreadAPI.Thread] = []
+    @MainActor @Published var threads: [MusicThreadAPI.Thread] = []
+    @MainActor @Published var bookmarks: [MusicThreadAPI.Thread] = []
+    @MainActor @Published var featured: [MusicThreadAPI.Thread] = []
 
 
     init(client: ClientCredentials, keychain: Keychain) {
         self.client = client
         self.apiClient = API(client: client, keychain: keychain)
         self.keychain = keychain
-
-        if self.apiClient.isAuthenticated {
-            self.fetchThreads()
-            self.fetchBookmarks()
-            self.fetchFeatured()
-        }
     }
 
-    func setAuth(tokenResponse: TokenResponse) {
-        try? self.apiClient.setAuth(tokenResponse)
-
-        self.fetchThreads()
-        self.fetchBookmarks()
-        self.fetchFeatured()
+    func setAuth(tokenResponse: TokenResponse) async throws {
+        try await self.apiClient.setAuth(tokenResponse)
+        try await self.fetchInitialContent()
     }
 
-    func fetchThreads() {
-        guard self.apiClient.isAuthenticated else {
+    func fetchInitialContent() async throws {
+        try await self.fetchThreads()
+        try await self.fetchBookmarks()
+        try await self.fetchFeatured()
+    }
+
+    @MainActor
+    func fetchThreads() async throws {
+        guard await self.apiClient.isAuthenticated() else {
             return
         }
-
-        self.apiClient.fetchThreads { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let threadResponse):
-                    self.threads = threadResponse.threads
-                }
-            }
-        }
+        self.threads = try await self.apiClient.fetchThreads().threads
     }
 
-    func fetchBookmarks() {
-        guard self.apiClient.isAuthenticated else {
+    @MainActor
+    func fetchBookmarks() async throws {
+        guard await self.apiClient.isAuthenticated() else {
             return
         }
-
-        self.apiClient.fetchBookmarks { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let threadResponse):
-                    self.bookmarks = threadResponse.threads
-                }
-            }
-        }
+        self.bookmarks = try await self.apiClient.fetchBookmarks().threads
     }
 
-    func fetchFeatured() {
+    @MainActor
+    func fetchFeatured() async throws {
         guard self.featured.isEmpty else {
             return
         }
 
-        self.apiClient.fetchFeatured { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let threadResponse):
-                    self.featured = threadResponse.threads
-                }
-            }
-        }
+        self.featured = try await self.apiClient.fetchFeatured().threads
     }
 
-    func isThreadBookmarked(thread: MusicThreadAPI.Thread) -> Bool {
-        guard self.apiClient.isAuthenticated else {
+    @MainActor
+    func isThreadBookmarked(thread: MusicThreadAPI.Thread) async -> Bool {
+        guard await self.apiClient.isAuthenticated() else {
             return false
         }
 
         return self.bookmarks.contains(where: { $0.key == thread.key })
     }
 
+    @MainActor
     func isThreadOwn(thread: MusicThreadAPI.Thread) -> Bool {
-        guard self.apiClient.isAuthenticated else {
-            return false
-        }
-
         return self.threads.contains(where: { $0.key == thread.key })
     }
 

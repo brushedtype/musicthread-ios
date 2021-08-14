@@ -16,8 +16,8 @@ public class API {
 
     private let tokenStore: TokenStore
 
-    public var isAuthenticated: Bool {
-        return self.tokenStore.isAuthenticated
+    public func isAuthenticated() async -> Bool {
+        return await self.tokenStore.isAuthenticated
     }
 
 
@@ -29,226 +29,143 @@ public class API {
 
     }
 
-    public func setAuth(_ tokenResponse: TokenResponse) throws {
-        if Foundation.Thread.isMainThread {
-            try self.tokenStore.setAuth(tokenResponse)
-        } else {
-            try DispatchQueue.main.sync {
-                try self.tokenStore.setAuth(tokenResponse)
-            }
-        }
+    public func setAuth(_ tokenResponse: TokenResponse) async throws {
+        try await self.tokenStore.setAuth(tokenResponse)
     }
 
 
     // MARK: - Authed Requests
 
-    public func fetchThreads(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
-        guard self.isAuthenticated else {
+    public func fetchThreads() async throws -> ThreadListResponse {
+        guard await self.isAuthenticated() else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
-            return completion(.failure(err))
+            throw err
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
+        let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
 
-            case .success(let accessToken):
-                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/threads"))
-                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/threads"))
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
 
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    guard error == nil, let data = data else {
-                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                        return completion(.failure(err))
-                    }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-                    let jsonDecoder = JSONDecoder()
-                    let result = jsonDecoder.decodeResult(ThreadListResponse.self, from: data)
-
-                    completion(result)
-                }.resume()
-            }
-        }
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(ThreadListResponse.self, from: data)
     }
 
-    public func fetchBookmarks(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
-        guard self.isAuthenticated else {
+    public func fetchBookmarks() async throws -> ThreadListResponse {
+        guard await self.isAuthenticated() else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
-            return completion(.failure(err))
+            throw err
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
+        let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
 
-            case .success(let accessToken):
-                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/bookmarks"))
-                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/bookmarks"))
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
 
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    guard error == nil, let data = data else {
-                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                        return completion(.failure(err))
-                    }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-                    let jsonDecoder = JSONDecoder()
-                    let result = jsonDecoder.decodeResult(ThreadListResponse.self, from: data)
-
-                    completion(result)
-                }.resume()
-            }
-        }
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(ThreadListResponse.self, from: data)
     }
 
-    public func createThread(title: String, description: String?, tags: [String], completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
-        guard self.isAuthenticated else {
+    public func createThread(title: String, description: String?, tags: [String]) async throws -> ThreadResponse {
+        guard await self.isAuthenticated() else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
-            return completion(.failure(err))
+            throw err
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
+        let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
 
-            case .success(let accessToken):
-                let reqBody = CreateThreadRequest(title: title, description: description ?? "", tags: tags)
+        let reqBody = CreateThreadRequest(title: title, description: description ?? "", tags: tags)
 
-                let jsonEncoder = JSONEncoder()
+        let jsonEncoder = JSONEncoder()
 
-                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/new-thread"))
-                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-                request.httpMethod = "POST"
-                request.httpBody = try? jsonEncoder.encode(reqBody)
+        var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/new-thread"))
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.httpBody = try jsonEncoder.encode(reqBody)
 
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    guard error == nil, let data = data else {
-                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                        return completion(.failure(err))
-                    }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-                    let jsonDecoder = JSONDecoder()
-                    let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
-
-                    completion(result)
-                }.resume()
-            }
-        }
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(ThreadResponse.self, from: data)
     }
 
-    public func updateBookmark(threadKey: String, isBookmarked: Bool, completion: @escaping (Result<UpdateBookmarkResponse, Error>) -> Void) {
-        guard self.isAuthenticated else {
+    public func updateBookmark(threadKey: String, isBookmarked: Bool) async throws -> UpdateBookmarkResponse {
+        guard await self.isAuthenticated() else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
-            return completion(.failure(err))
+            throw err
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
+        let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
 
-            case .success(let accessToken):
-                let reqBody = UpdateBookmarkRequest(threadKey: threadKey, isBookmarked: isBookmarked)
+        let reqBody = UpdateBookmarkRequest(threadKey: threadKey, isBookmarked: isBookmarked)
 
-                let jsonEncoder = JSONEncoder()
+        let jsonEncoder = JSONEncoder()
 
-                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/update-bookmark"))
-                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-                request.httpMethod = "POST"
-                request.httpBody = try? jsonEncoder.encode(reqBody)
+        var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/update-bookmark"))
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.httpBody = try jsonEncoder.encode(reqBody)
 
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    guard error == nil, let data = data else {
-                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                        return completion(.failure(err))
-                    }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-                    let jsonDecoder = JSONDecoder()
-                    let result = jsonDecoder.decodeResult(UpdateBookmarkResponse.self, from: data)
-
-                    completion(result)
-                }.resume()
-            }
-        }
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(UpdateBookmarkResponse.self, from: data)
     }
 
-    public func submitLink(threadKey: String, linkURL: String, completion: @escaping (Result<LinkResponse, Error>) -> Void) {
-        guard self.isAuthenticated else {
+    public func submitLink(threadKey: String, linkURL: String) async throws -> LinkResponse {
+        guard await self.isAuthenticated() else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
-            return completion(.failure(err))
+            throw err
         }
 
-        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
+        let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
 
-            case .success(let accessToken):
-                let reqBody = SubmitMusicLinkRequest(threadKey: threadKey, linkURL: linkURL)
+        let reqBody = SubmitMusicLinkRequest(threadKey: threadKey, linkURL: linkURL)
 
-                let jsonEncoder = JSONEncoder()
+        let jsonEncoder = JSONEncoder()
 
-                var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/add-link"))
-                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-                request.httpMethod = "POST"
-                request.httpBody = try? jsonEncoder.encode(reqBody)
+        var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/add-link"))
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        request.httpBody = try jsonEncoder.encode(reqBody)
 
-                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                    guard error == nil, let data = data else {
-                        let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                        return completion(.failure(err))
-                    }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-                    let jsonDecoder = JSONDecoder()
-                    let result = jsonDecoder.decodeResult(LinkResponse.self, from: data)
-
-                    completion(result)
-                }.resume()
-            }
-        }
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(LinkResponse.self, from: data)
     }
 
 
     // MARK: - Unauthed Requests
 
-    public func fetchFeatured(completion: @escaping (Result<ThreadListResponse, Error>) -> Void) {
+    public func fetchFeatured() async throws -> ThreadListResponse {
         let request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/featured"))
 
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard error == nil, let data = data else {
-                let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                return completion(.failure(err))
-            }
+        let (data, _) = try await URLSession.shared.data(for: request)
 
-            let jsonDecoder = JSONDecoder()
-            let result = jsonDecoder.decodeResult(ThreadListResponse.self, from: data)
-
-            completion(result)
-        }.resume()
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(ThreadListResponse.self, from: data)
     }
 
-    public func fetchThread(key: String, completion: @escaping (Result<ThreadResponse, Error>) -> Void) {
-        self.tokenStore.fetchAccessToken(client: self.client) { (result) in
-            var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
-
-            if case .success(let accessToken) = result {
-                request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-            }
-
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard error == nil, let data = data else {
-                    let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -3424, userInfo: [NSLocalizedDescriptionKey: "invalid response"])
-                    return completion(.failure(err))
-                }
-
-                let jsonDecoder = JSONDecoder()
-                let result = jsonDecoder.decodeResult(ThreadResponse.self, from: data)
-
-                completion(result)
-            }.resume()
+    public func fetchThread(key: String) async throws -> ThreadResponse {
+        guard await self.isAuthenticated() else {
+            let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
+            throw err
         }
+
+        let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
+
+        var request = URLRequest(url: self.baseURL.appendingPathComponent("/v0/thread/" + key))
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        let jsonDecoder = JSONDecoder()
+        return try jsonDecoder.decode(ThreadResponse.self, from: data)
     }
 
 }

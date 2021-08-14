@@ -21,6 +21,7 @@ struct FeaturedTabView: View {
                     ThreadListItemView(thread: thread)
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationTitle("Featured")
             .navigationBarTitleDisplayMode(.inline)
         }
