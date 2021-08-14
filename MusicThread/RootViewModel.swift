@@ -64,11 +64,7 @@ actor RootViewModel: ObservableObject {
     }
 
     @MainActor
-    func isThreadBookmarked(thread: MusicThreadAPI.Thread) async -> Bool {
-        guard await self.apiClient.isAuthenticated() else {
-            return false
-        }
-
+    func isThreadBookmarked(thread: MusicThreadAPI.Thread) -> Bool {
         return self.bookmarks.contains(where: { $0.key == thread.key })
     }
 

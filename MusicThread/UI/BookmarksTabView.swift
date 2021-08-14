@@ -19,6 +19,11 @@ struct BookmarksTabView: View {
             List(self.viewModel.bookmarks, id: \.key) { thread in
                 NavigationLink(destination: ThreadView(thread: thread, viewModel: self.viewModel)) {
                     ThreadListItemView(thread: thread)
+                        .onDisappear {
+                            Task.detached(priority: .userInitiated) {
+                                try await self.viewModel.fetchBookmarks()
+                            }
+                        }
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -40,7 +45,7 @@ extension ThreadView {
         self.init(
             thread: thread,
             isOwnThread: viewModel.isThreadOwn(thread: thread),
-            bookmarkState: { await viewModel.isThreadBookmarked(thread: thread) },
+            bookmarkState: { viewModel.isThreadBookmarked(thread: thread) },
             reloadBookmarks: viewModel.fetchBookmarks,
             apiClient: viewModel.apiClient
         )
