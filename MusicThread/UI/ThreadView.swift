@@ -75,6 +75,9 @@ struct ThreadView: View {
                 await self.reloadLinks()
             }
         })
+        .refreshable {
+            await self.reloadLinks()
+        }
         .sheet(isPresented: self.$isPresentingNewLinkView, content: {
             NavigationView {
                 NewLinkView(isSubmitting: self.$isSubmittingLink) { (linkURL) in

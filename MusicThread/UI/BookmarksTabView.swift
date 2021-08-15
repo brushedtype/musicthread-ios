@@ -29,6 +29,9 @@ struct BookmarksTabView: View {
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Bookmarks")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                try? await self.viewModel.fetchBookmarks()
+            }
         }
         .tabItem {
             Image(systemName: "bookmark.fill")

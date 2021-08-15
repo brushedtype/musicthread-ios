@@ -175,21 +175,21 @@ struct MainInterfaceView: View {
 
         self.isSubmittingLink = true
 
-        Task.detached(priority: .userInitiated) { () async throws -> Bool in
+        Task.detached(priority: .userInitiated) {
             defer {
                 self.isSubmittingLink = false
             }
 
             guard let url = try await linkURLProvider.loadItem(forTypeIdentifier: "public.url", options: nil) as? URL else {
-                return await extensionContext.completeRequest(returningItems: nil)
+                extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
+                return
             }
 
             do {
                 let _ = try await self.apiClient.submitLink(threadKey: thread.key, linkURL: url.absoluteString)
-                return await extensionContext.completeRequest(returningItems: nil)
+                extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
             } catch {
                 debugPrint(error)
-                return false
             }
         }
     }

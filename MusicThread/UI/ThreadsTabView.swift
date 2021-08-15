@@ -27,6 +27,9 @@ struct ThreadsTabView: View {
             .navigationBarItems(trailing: self.navigationItems)
             .navigationTitle("Threads")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                try? await self.viewModel.fetchThreads()
+            }
         }
         .sheet(isPresented: self.$isPresentingNewThreadView, content: {
             NavigationView {

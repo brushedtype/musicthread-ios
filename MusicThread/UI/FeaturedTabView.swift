@@ -24,6 +24,9 @@ struct FeaturedTabView: View {
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Featured")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                try? await self.viewModel.fetchFeatured()
+            }
         }
         .tabItem {
             Image(systemName: "star.circle.fill")
