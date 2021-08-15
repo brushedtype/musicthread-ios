@@ -36,7 +36,7 @@ struct ThreadView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 10)
-                } else if self.isFetchingLinks {
+                } else if self.isFetchingLinks && self.links.isEmpty {
                     VStack {
                         HStack(spacing: 16) {
                             ProgressView()
