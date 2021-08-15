@@ -204,7 +204,7 @@ public struct Link: Decodable {
     public let key: String
     public let title: String
     public let artist: String
-    public let thumbnailURL: URL
+    public let thumbnailURL: URL?
     public let pageURL: URL
 
     enum CodingKeys: String, CodingKey {
