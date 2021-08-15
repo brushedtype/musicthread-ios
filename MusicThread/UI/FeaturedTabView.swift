@@ -25,7 +25,12 @@ struct FeaturedTabView: View {
             .navigationTitle("Featured")
             .navigationBarTitleDisplayMode(.inline)
             .refreshable {
-                try? await self.viewModel.fetchFeatured()
+                await self.viewModel.fetchFeatured()
+            }
+            .onAppear {
+                Task.detached(priority: .userInitiated) {
+                    await self.viewModel.fetchFeatured()
+                }
             }
         }
         .tabItem {

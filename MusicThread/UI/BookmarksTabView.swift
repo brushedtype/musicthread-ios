@@ -19,19 +19,19 @@ struct BookmarksTabView: View {
             List(self.viewModel.bookmarks, id: \.key) { thread in
                 NavigationLink(destination: ThreadView(thread: thread, viewModel: self.viewModel)) {
                     ThreadListItemView(thread: thread)
-                        .onDisappear {
-                            Task.detached(priority: .userInitiated) {
-                                try await self.viewModel.fetchBookmarks()
-                            }
-                        }
                 }
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Bookmarks")
             .navigationBarTitleDisplayMode(.inline)
             .refreshable {
-                try? await self.viewModel.fetchBookmarks()
+                await self.viewModel.fetchBookmarks()
             }
+            .onAppear(perform: {
+                Task.detached(priority: .userInitiated) {
+                    await self.viewModel.fetchBookmarks()
+                }
+            })
         }
         .tabItem {
             Image(systemName: "bookmark.fill")

@@ -22,7 +22,7 @@ struct RootView: View {
         }
         .onAppear {
             Task.detached(priority: .userInitiated) {
-                try await self.viewModel.fetchInitialContent()
+                await self.viewModel.fetchInitialContent()
             }
         }
     }

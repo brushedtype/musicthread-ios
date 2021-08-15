@@ -10,11 +10,16 @@ import SwiftUI
 import MusicThreadAPI
 import KeychainAccess
 
-actor RootViewModel: ObservableObject {
+@MainActor
+final class RootViewModel: ObservableObject {
 
     let client: ClientCredentials
     let keychain: Keychain
     let apiClient: API
+
+    private var fetchThreadsTask: Task<Void, Never>?
+    private var fetchBookmarksTask: Task<Void, Never>?
+    private var fetchFeaturedTask: Task<Void, Never>?
 
     @MainActor @Published var threads: [MusicThreadAPI.Thread] = []
     @MainActor @Published var bookmarks: [MusicThreadAPI.Thread] = []
@@ -29,46 +34,98 @@ actor RootViewModel: ObservableObject {
 
     func setAuth(tokenResponse: TokenResponse) async throws {
         try await self.apiClient.setAuth(tokenResponse)
-        try await self.fetchInitialContent()
+        await self.fetchInitialContent()
     }
 
-    func fetchInitialContent() async throws {
-        try await self.fetchThreads()
-        try await self.fetchBookmarks()
-        try await self.fetchFeatured()
+    func fetchInitialContent() async {
+        await self.fetchThreads()
+        await self.fetchBookmarks()
+        await self.fetchFeatured()
     }
 
-    @MainActor
-    func fetchThreads() async throws {
-        guard await self.apiClient.isAuthenticated() else {
-            return
-        }
-        self.threads = try await self.apiClient.fetchThreads().threads
-    }
-
-    @MainActor
-    func fetchBookmarks() async throws {
-        guard await self.apiClient.isAuthenticated() else {
-            return
-        }
-        self.bookmarks = try await self.apiClient.fetchBookmarks().threads
-    }
-
-    @MainActor
-    func fetchFeatured() async throws {
-        guard self.featured.isEmpty else {
-            return
+    func fetchThreads() async {
+        if let task = self.fetchThreadsTask {
+            return await task.value
         }
 
-        self.featured = try await self.apiClient.fetchFeatured().threads
+        let task = Task {
+            guard await self.apiClient.isAuthenticated() else {
+                return
+            }
+
+            guard let response = try? await self.apiClient.fetchThreads() else {
+                return
+            }
+
+            self.threads = response.threads
+        }
+
+        self.fetchThreadsTask = task
+        defer {
+            self.fetchThreadsTask = nil
+        }
+
+        return await task.value
     }
 
-    @MainActor
+    func fetchBookmarks() async {
+        if let task = self.fetchBookmarksTask {
+            return await task.value
+        }
+
+        let task = Task {
+            guard await self.apiClient.isAuthenticated() else {
+                return
+            }
+
+            guard let response = try? await self.apiClient.fetchBookmarks() else {
+                return
+            }
+
+            self.bookmarks = response.threads
+        }
+
+        self.fetchBookmarksTask = task
+        defer {
+            self.fetchBookmarksTask = nil
+        }
+
+        return await task.value
+    }
+
+    func fetchFeatured() async {
+        if let task = self.fetchFeaturedTask {
+            return await task.value
+        }
+
+        let task = Task {
+            guard await self.apiClient.isAuthenticated() else {
+                return
+            }
+
+            guard let response = try? await self.apiClient.fetchFeatured() else {
+                return
+            }
+
+            self.featured = response.threads
+        }
+
+        self.fetchFeaturedTask = task
+        defer {
+            self.fetchFeaturedTask = nil
+        }
+
+        return await task.value
+    }
+
+}
+
+extension RootViewModel {
+
     func isThreadBookmarked(thread: MusicThreadAPI.Thread) -> Bool {
         return self.bookmarks.contains(where: { $0.key == thread.key })
     }
 
-    @MainActor
     func isThreadOwn(thread: MusicThreadAPI.Thread) -> Bool {
         return self.threads.contains(where: { $0.key == thread.key })
     }

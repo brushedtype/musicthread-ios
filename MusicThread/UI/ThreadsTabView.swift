@@ -28,7 +28,12 @@ struct ThreadsTabView: View {
             .navigationTitle("Threads")
             .navigationBarTitleDisplayMode(.inline)
             .refreshable {
-                try? await self.viewModel.fetchThreads()
+                await self.viewModel.fetchThreads()
+            }
+            .onAppear {
+                Task.detached(priority: .userInitiated) {
+                    await self.viewModel.fetchThreads()
+                }
             }
         }
         .sheet(isPresented: self.$isPresentingNewThreadView, content: {
@@ -67,7 +72,7 @@ struct ThreadsTabView: View {
 
         do {
             let _ = try await self.viewModel.apiClient.createThread(title: title, description: nil, tags: [])
-            try await self.viewModel.fetchThreads()
+            await self.viewModel.fetchThreads()
 
             self.isPresentingNewThreadView = false
         } catch {
