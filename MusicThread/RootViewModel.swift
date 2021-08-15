@@ -21,9 +21,9 @@ final class RootViewModel: ObservableObject {
     private var fetchBookmarksTask: Task<Void, Never>?
     private var fetchFeaturedTask: Task<Void, Never>?
 
-    @MainActor @Published var threads: [MusicThreadAPI.Thread] = []
-    @MainActor @Published var bookmarks: [MusicThreadAPI.Thread] = []
-    @MainActor @Published var featured: [MusicThreadAPI.Thread] = []
+    @Published var threads: [MusicThreadAPI.Thread] = []
+    @Published var bookmarks: [MusicThreadAPI.Thread] = []
+    @Published var featured: [MusicThreadAPI.Thread] = []
 
 
     init(client: ClientCredentials, keychain: Keychain) {
