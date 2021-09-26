@@ -21,8 +21,17 @@ struct BookmarksTabView: View {
                     ThreadListItemView(thread: thread)
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationTitle("Bookmarks")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                await self.viewModel.fetchBookmarks()
+            }
+            .onAppear(perform: {
+                Task.detached(priority: .userInitiated) {
+                    await self.viewModel.fetchBookmarks()
+                }
+            })
         }
         .tabItem {
             Image(systemName: "bookmark.fill")
@@ -34,6 +43,7 @@ struct BookmarksTabView: View {
 
 extension ThreadView {
 
+    @MainActor
     init(thread: MusicThreadAPI.Thread, viewModel: RootViewModel) {
         self.init(
             thread: thread,

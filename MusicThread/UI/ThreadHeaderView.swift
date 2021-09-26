@@ -37,7 +37,7 @@ struct ThreadHeaderView: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .padding(.vertical, 16)
+        .padding(.bottom, 32)
     }
 
 }

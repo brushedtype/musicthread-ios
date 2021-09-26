@@ -114,7 +114,7 @@ extension ClientCredentials {
         }.resume()
     }
 
-    public func refreshToken(refreshToken: String, completion: @escaping (Result<TokenResponse, Error>) -> Void) {
+    public func refreshToken(refreshToken: String) async throws -> TokenResponse {
         var components = URLComponents()
         components.queryItems = [
             URLQueryItem(name: "grant_type", value: "refresh_token"),
@@ -127,19 +127,8 @@ extension ClientCredentials {
         req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         req.httpBody = components.query?.data(using: .utf8)
 
-        URLSession.shared.dataTask(with: req) { (data, response, error) in
-            guard let data = data else {
-                let err = error ?? NSError(domain: "co.brushedtype.musicthread", code: -9933, userInfo: [NSLocalizedDescriptionKey: "Invalid refresh token response"])
-                return completion(.failure(err))
-            }
-
-            let jsonDecoder = JSONDecoder()
-            let result = jsonDecoder.decodeResult(TokenResponse.self, from: data)
-
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }.resume()
+        let (data, _) = try await URLSession.shared.data(for: req)
+        return try JSONDecoder().decode(TokenResponse.self, from: data)
     }
 
 }

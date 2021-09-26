@@ -14,7 +14,7 @@ struct ThreadView: View {
     let thread: MusicThreadAPI.Thread
     let isOwnThread: Bool
     let bookmarkState: () -> Bool
-    let reloadBookmarks: () -> Void
+    let reloadBookmarks: () async throws -> Void
 
     @State var isBookmarked = false
     @State var isFetchingLinks = false
@@ -36,7 +36,7 @@ struct ThreadView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 10)
-                } else if self.isFetchingLinks {
+                } else if self.isFetchingLinks && self.links.isEmpty {
                     VStack {
                         HStack(spacing: 16) {
                             ProgressView()
@@ -50,6 +50,8 @@ struct ThreadView: View {
                     VStack {
                         Text("\(self.thread.author.name) hasn't posted any links yet...")
                             .foregroundColor(Color(.placeholderText))
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, 10)
@@ -60,7 +62,7 @@ struct ThreadView: View {
                 }
             }
         }
-        .listStyle(GroupedListStyle())
+        .listStyle(InsetGroupedListStyle())
         .navigationBarItems(trailing: self.navigationBarItems)
         .onAppear(perform: {
             if self.thread.isPrivate && self.isOwnThread == false {
@@ -68,12 +70,20 @@ struct ThreadView: View {
             }
 
             self.isBookmarked = self.bookmarkState()
-            self.reloadLinks()
+
+            Task.detached(priority: .userInitiated) {
+                await self.reloadLinks()
+            }
         })
+        .refreshable {
+            await self.reloadLinks()
+        }
         .sheet(isPresented: self.$isPresentingNewLinkView, content: {
             NavigationView {
                 NewLinkView(isSubmitting: self.$isSubmittingLink) { (linkURL) in
-                    self.submitLink(linkURL)
+                    Task.detached(priority: .userInitiated) {
+                        await self.submitLink(linkURL)
+                    }
                 }
                 .navigationTitle("Add Music")
                 .navigationBarTitleDisplayMode(.inline)
@@ -85,7 +95,12 @@ struct ThreadView: View {
         HStack(spacing: 20) {
             if self.isOwnThread == false {
                 Button(action: {
-                    self.updateBookmark(newState: !self.isBookmarked)
+                    let newState = !self.isBookmarked
+                    self.isBookmarked = newState
+
+                    Task.detached(priority: .userInitiated) {
+                        await self.updateBookmark(newState: newState)
+                    }
                 }, label: {
                     Image(systemName: self.isBookmarked ? "bookmark.fill" : "bookmark")
                         .imageScale(.large)
@@ -108,60 +123,47 @@ struct ThreadView: View {
     }
 
 
-    private func reloadLinks() {
+    private func reloadLinks() async {
         guard self.isFetchingLinks == false else {
             return
         }
 
         self.isFetchingLinks = true
 
-        self.apiClient.fetchThread(key: self.thread.key) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let threadResponse):
-                    self.links = threadResponse.links
-                }
-
-                self.isFetchingLinks = false
-            }
+        do {
+            self.links = try await self.apiClient.fetchThread(key: self.thread.key).links
+        } catch {
+            debugPrint(error)
         }
+
+        self.isFetchingLinks = false
     }
 
-    private func submitLink(_ linkURL: String) {
+    private func submitLink(_ linkURL: String) async {
         guard self.isSubmittingLink == false else {
             return
         }
 
         self.isSubmittingLink = true
 
-        self.apiClient.submitLink(threadKey: self.thread.key, linkURL: linkURL) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let err):
-                    debugPrint(err)
-                case .success(_):
-                    self.reloadLinks()
-                    self.isPresentingNewLinkView = false
-                }
+        do {
+            let _ = try await self.apiClient.submitLink(threadKey: self.thread.key, linkURL: linkURL)
+            await self.reloadLinks()
 
-                self.isSubmittingLink = false
-            }
+            self.isPresentingNewLinkView = false
+        } catch {
+            debugPrint(error)
         }
+
+        self.isSubmittingLink = false
     }
 
-    private func updateBookmark(newState: Bool) {
-        self.apiClient.updateBookmark(threadKey: self.thread.key, isBookmarked: newState) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let response):
-                    self.isBookmarked = response.isBookmarked
-                }
-                self.reloadBookmarks()
-            }
+    private func updateBookmark(newState: Bool) async {
+        do {
+            self.isBookmarked = try await self.apiClient.updateBookmark(threadKey: self.thread.key, isBookmarked: newState).isBookmarked
+//            try await self.reloadBookmarks()
+        } catch {
+            debugPrint(error)
         }
     }
 

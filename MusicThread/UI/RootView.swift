@@ -20,6 +20,11 @@ struct RootView: View {
             BookmarksTabView(viewModel: self.viewModel)
             FeaturedTabView(viewModel: self.viewModel)
         }
+        .onAppear {
+            Task.detached(priority: .userInitiated) {
+                await self.viewModel.fetchInitialContent()
+            }
+        }
     }
 
 }

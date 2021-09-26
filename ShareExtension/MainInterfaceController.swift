@@ -28,7 +28,7 @@ class MainInterfaceController: UIHostingController<MainInterfaceView> {
     static let keychain = Keychain(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
 
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    @objc init() {
         let api = API(client: MainInterfaceController.client, keychain: MainInterfaceController.keychain)
         let context = ExtensionContext()
 
@@ -106,29 +106,27 @@ struct ThreadListView: View {
         }
         .listStyle(InsetGroupedListStyle())
         .onAppear(perform: {
-            self.fetchThreads()
+            Task.detached(priority: .userInitiated) {
+                await self.fetchThreads()
+            }
         })
     }
 
-    func fetchThreads() {
+    func fetchThreads() async {
         guard self.isFetchingThreads == false else {
             return
         }
 
         self.isFetchingThreads = true
 
-        self.apiClient.fetchThreads { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(let response):
-                    self.threads = response.threads
-                }
-
-                self.isFetchingThreads = false
-            }
+        do {
+            let response = try await self.apiClient.fetchThreads()
+            self.threads = response.threads
+        } catch {
+            debugPrint(error)
         }
+
+        self.isFetchingThreads = false
     }
 
 }
@@ -177,26 +175,23 @@ struct MainInterfaceView: View {
 
         self.isSubmittingLink = true
 
-        linkURLProvider.loadItem(forTypeIdentifier: "public.url", options: nil, completionHandler: { (url, error) in
-            DispatchQueue.main.async {
-                guard error == nil, let linkURL = url as? URL else {
-                    return extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
-                }
-
-                self.apiClient.submitLink(threadKey: thread.key, linkURL: linkURL.absoluteString) { (result) in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .failure(let error):
-                            debugPrint(error)
-                        case .success(_):
-                            extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
-                        }
-
-                        self.isSubmittingLink = false
-                    }
-                }
+        Task.detached(priority: .userInitiated) {
+            defer {
+                self.isSubmittingLink = false
             }
-        })
+
+            guard let url = try await linkURLProvider.loadItem(forTypeIdentifier: "public.url", options: nil) as? URL else {
+                extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
+                return
+            }
+
+            do {
+                let _ = try await self.apiClient.submitLink(threadKey: thread.key, linkURL: url.absoluteString)
+                extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
+            } catch {
+                debugPrint(error)
+            }
+        }
     }
 
 }

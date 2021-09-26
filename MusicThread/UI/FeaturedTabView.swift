@@ -21,8 +21,17 @@ struct FeaturedTabView: View {
                     ThreadListItemView(thread: thread)
                 }
             }
+            .listStyle(InsetGroupedListStyle())
             .navigationTitle("Featured")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                await self.viewModel.fetchFeatured()
+            }
+            .onAppear {
+                Task.detached(priority: .userInitiated) {
+                    await self.viewModel.fetchFeatured()
+                }
+            }
         }
         .tabItem {
             Image(systemName: "star.circle.fill")

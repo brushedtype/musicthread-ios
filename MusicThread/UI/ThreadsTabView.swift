@@ -23,15 +23,25 @@ struct ThreadsTabView: View {
                     ThreadListItemView(thread: thread)
                 }
             }
-            .listStyle(PlainListStyle())
+            .listStyle(InsetGroupedListStyle())
             .navigationBarItems(trailing: self.navigationItems)
             .navigationTitle("Threads")
             .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
+                await self.viewModel.fetchThreads()
+            }
+            .onAppear {
+                Task.detached(priority: .userInitiated) {
+                    await self.viewModel.fetchThreads()
+                }
+            }
         }
         .sheet(isPresented: self.$isPresentingNewThreadView, content: {
             NavigationView {
                 NewThreadView(isSubmittingThread: self.$isSubmittingNewThread) { threadTitle in
-                    self.createThread(title: threadTitle)
+                    Task.detached(priority: .userInitiated) {
+                        try await self.createThread(title: threadTitle)
+                    }
                 }
                 .navigationTitle("Create New Thread")
                 .navigationBarTitleDisplayMode(.inline)
@@ -53,26 +63,23 @@ struct ThreadsTabView: View {
         })
     }
 
-    func createThread(title: String) {
+    func createThread(title: String) async throws {
         guard self.isSubmittingNewThread == false else {
             return
         }
 
         self.isSubmittingNewThread = true
 
-        self.viewModel.apiClient.createThread(title: title, description: nil, tags: []) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    debugPrint(error)
-                case .success(_):
-                    self.viewModel.fetchThreads()
-                    self.isPresentingNewThreadView = false
-                }
+        do {
+            let _ = try await self.viewModel.apiClient.createThread(title: title, description: nil, tags: [])
+            await self.viewModel.fetchThreads()
 
-                self.isSubmittingNewThread = false
-            }
+            self.isPresentingNewThreadView = false
+        } catch {
+            debugPrint(error)
         }
+
+        self.isSubmittingNewThread = false
     }
 
 }

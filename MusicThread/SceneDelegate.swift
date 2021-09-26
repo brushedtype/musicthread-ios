@@ -45,8 +45,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
 
-        if self.viewModel.apiClient.isAuthenticated == false {
-            self.startAuth()
+        Task.detached(priority: .userInitiated) {
+            if await self.viewModel.apiClient.isAuthenticated() == false {
+                await self.startAuth()
+            }
         }
     }
 
@@ -111,8 +113,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     debugPrint(error)
 
                 case .success(let tokenResposne):
-                    debugPrint(tokenResposne)
-                    self.viewModel.setAuth(tokenResponse: tokenResposne)
+                    Task.detached(priority: .userInitiated) {
+                        try await self.viewModel.setAuth(tokenResponse: tokenResposne)
+                    }
                 }
             }
         }
