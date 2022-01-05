@@ -38,9 +38,9 @@ struct ThreadsTabView: View {
         }
         .sheet(isPresented: self.$isPresentingNewThreadView, content: {
             NavigationView {
-                NewThreadView(isSubmittingThread: self.$isSubmittingNewThread) { threadTitle in
+                NewThreadView(isSubmittingThread: self.$isSubmittingNewThread) { threadTitle, isPrivate in
                     Task.detached(priority: .userInitiated) {
-                        try await self.createThread(title: threadTitle)
+                        try await self.createThread(title: threadTitle, isPrivate: isPrivate)
                     }
                 }
                 .navigationTitle("Create New Thread")
@@ -63,7 +63,7 @@ struct ThreadsTabView: View {
         })
     }
 
-    func createThread(title: String) async throws {
+    func createThread(title: String, isPrivate: Bool) async throws {
         guard self.isSubmittingNewThread == false else {
             return
         }
@@ -71,7 +71,7 @@ struct ThreadsTabView: View {
         self.isSubmittingNewThread = true
 
         do {
-            let _ = try await self.viewModel.apiClient.createThread(title: title, description: nil, tags: [])
+            let _ = try await self.viewModel.apiClient.createThread(title: title, description: nil, tags: [], isPrivate: isPrivate)
             await self.viewModel.fetchThreads()
 
             self.isPresentingNewThreadView = false

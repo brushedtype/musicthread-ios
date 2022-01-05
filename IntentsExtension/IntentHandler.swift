@@ -102,7 +102,7 @@ extension IntentHandler: CreateThreadIntentHandling {
         }
 
         do {
-            let response = try await API.shared.createThread(title: title, description: intent.threadDescription, tags: intent.tags ?? [])
+            let response = try await API.shared.createThread(title: title, description: intent.threadDescription, tags: intent.tags ?? [], isPrivate: intent.isPrivate?.boolValue ?? false)
 
             let intentResponse = CreateThreadIntentResponse(code: .success, userActivity: nil)
             intentResponse.thread = IntentsExtension.Thread(thread: response.thread)

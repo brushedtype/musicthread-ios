@@ -70,7 +70,7 @@ public class API {
         return try jsonDecoder.decode(ThreadListResponse.self, from: data)
     }
 
-    public func createThread(title: String, description: String?, tags: [String]) async throws -> ThreadResponse {
+    public func createThread(title: String, description: String?, tags: [String], isPrivate: Bool) async throws -> ThreadResponse {
         guard await self.isAuthenticated() else {
             let err = NSError(domain: "co.brushedtype.musicthread", code: -3333, userInfo: [NSLocalizedDescriptionKey: "method requires auth"])
             throw err
@@ -78,7 +78,7 @@ public class API {
 
         let accessToken = try await self.tokenStore.fetchAccessToken(client: self.client)
 
-        let reqBody = CreateThreadRequest(title: title, description: description ?? "", tags: tags)
+        let reqBody = CreateThreadRequest(title: title, description: description ?? "", tags: tags, isPrivate: isPrivate)
 
         let jsonEncoder = JSONEncoder()
 
@@ -255,11 +255,13 @@ struct CreateThreadRequest: Codable {
     let title: String
     let description: String
     let tags: [String]
+    let isPrivate: Bool
 
     enum CodingKeys: String, CodingKey {
         case title
         case description
         case tags
+        case isPrivate = "is_private"
     }
 }
 
