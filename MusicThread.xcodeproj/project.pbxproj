@@ -7,22 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC27F81E25C96A4100C1B97A /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC27F81D25C96A4100C1B97A /* KeychainAccess */; };
-		BC27F82025C96A4100C1B97A /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = BC27F81F25C96A4100C1B97A /* JWTDecode */; };
-		BC27F82125C96A4100C1B97A /* libMusicThreadAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */; };
-		BC2FFCDB25C80A5D00494949 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFCDA25C80A5D00494949 /* JWTDecode */; };
 		BC2FFCDF25C80FBC00494949 /* NewLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFCDE25C80FBC00494949 /* NewLinkView.swift */; };
-		BC2FFCEF25C833E900494949 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCD7A97D25BED2ED007BCF8D /* Auth.swift */; };
-		BC2FFCF025C833E900494949 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA125C5931900480220 /* TokenStore.swift */; };
-		BC2FFCF125C833E900494949 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3DADA425C5951200480220 /* API.swift */; };
-		BC2FFCFB25C8344600494949 /* libMusicThreadAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */; };
-		BC2FFCFF25C8345B00494949 /* ClientCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFCFE25C8345B00494949 /* ClientCredentials.swift */; };
-		BC2FFD0325C835D100494949 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFD0225C835D100494949 /* KeychainAccess */; };
-		BC2FFD0925C8369800494949 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = BC2FFD0825C8369800494949 /* JWTDecode */; };
 		BC2FFD2025C8392600494949 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC2FFD1625C8392600494949 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BC2FFD3F25C839D300494949 /* MainInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFD3E25C839D300494949 /* MainInterfaceController.swift */; };
 		BC2FFD5725C83C4300494949 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC2FFD5625C83C4300494949 /* Assets.xcassets */; };
-		BC2FFD9C25C8492A00494949 /* libMusicThreadAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */; };
 		BC2FFE1A25C9674600494949 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC2FFE0225C960DB00494949 /* Intents.framework */; };
 		BC2FFE1D25C9674600494949 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2FFE1C25C9674600494949 /* IntentHandler.swift */; };
 		BC2FFE2125C9674600494949 /* IntentsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BC2FFE1925C9674600494949 /* IntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -39,7 +27,12 @@
 		BC52CC0425C6DE9200746627 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */; };
 		BC52CC0725C6DEA600746627 /* ThreadLinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */; };
 		BC52CC0A25C6E23B00746627 /* NewThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0925C6E23B00746627 /* NewThreadView.swift */; };
-		BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = BC695CC925C5FCF90003AA2B /* KeychainAccess */; };
+		BC5B4CD727F8C126003D2461 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CD627F8C126003D2461 /* MusicThreadTokenStore */; };
+		BC5B4CD927F8C269003D2461 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CD827F8C269003D2461 /* MusicThreadAPI */; };
+		BC5B4CDB27F8C296003D2461 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CDA27F8C296003D2461 /* MusicThreadAPI */; };
+		BC5B4CDD27F8C296003D2461 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CDC27F8C296003D2461 /* MusicThreadTokenStore */; };
+		BC5B4CDF27F8C29C003D2461 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CDE27F8C29C003D2461 /* MusicThreadAPI */; };
+		BC5B4CE127F8C29C003D2461 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CE027F8C29C003D2461 /* MusicThreadTokenStore */; };
 		BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29325B49C2900E266F8 /* AppDelegate.swift */; };
 		BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29525B49C2900E266F8 /* SceneDelegate.swift */; };
 		BC78F29D25B49C2A00E266F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC78F29C25B49C2A00E266F8 /* Assets.xcassets */; };
@@ -47,33 +40,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BC27F81B25C96A3900C1B97A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC78F28825B49C2900E266F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BC2FFCE525C833E000494949;
-			remoteInfo = MusicThreadAPI;
-		};
-		BC2FFCF825C8343D00494949 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC78F28825B49C2900E266F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BC2FFCE525C833E000494949;
-			remoteInfo = MusicThreadAPI;
-		};
 		BC2FFD1E25C8392600494949 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC78F28825B49C2900E266F8 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = BC2FFD1525C8392600494949;
 			remoteInfo = ShareExtension;
-		};
-		BC2FFD9A25C8492300494949 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC78F28825B49C2900E266F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BC2FFCE525C833E000494949;
-			remoteInfo = MusicThreadAPI;
 		};
 		BC2FFE1F25C9674600494949 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -85,15 +57,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BC2FFCE425C833E000494949 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BC2FFD2425C8392600494949 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,8 +74,6 @@
 /* Begin PBXFileReference section */
 		BC27F81625C968D600C1B97A /* IntentsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentsExtension.entitlements; sourceTree = "<group>"; };
 		BC2FFCDE25C80FBC00494949 /* NewLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLinkView.swift; sourceTree = "<group>"; };
-		BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMusicThreadAPI.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC2FFCFE25C8345B00494949 /* ClientCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientCredentials.swift; sourceTree = "<group>"; };
 		BC2FFD0C25C837D900494949 /* MusicThread.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MusicThread.entitlements; sourceTree = "<group>"; };
 		BC2FFD1625C8392600494949 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC2FFD1D25C8392600494949 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -124,8 +85,6 @@
 		BC2FFE1C25C9674600494949 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		BC2FFE1E25C9674600494949 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC2FFE2925C9675F00494949 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
-		BC3DADA125C5931900480220 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
-		BC3DADA425C5951200480220 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		BC3DADAB25C5B97700480220 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
 		BC3DADAF25C5B99C00480220 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BC3DADB225C5B9E800480220 /* ThreadListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadListItemView.swift; sourceTree = "<group>"; };
@@ -142,24 +101,15 @@
 		BC78F29C25B49C2A00E266F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC78F29F25B49C2A00E266F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BC78F2A125B49C2A00E266F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BCD7A97D25BED2ED007BCF8D /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BC2FFCE325C833E000494949 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC2FFD0925C8369800494949 /* JWTDecode in Frameworks */,
-				BC2FFD0325C835D100494949 /* KeychainAccess in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BC2FFD1325C8392600494949 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC2FFD9C25C8492A00494949 /* libMusicThreadAPI.a in Frameworks */,
+				BC5B4CDD27F8C296003D2461 /* MusicThreadTokenStore in Frameworks */,
+				BC5B4CDB27F8C296003D2461 /* MusicThreadAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,10 +117,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC27F82125C96A4100C1B97A /* libMusicThreadAPI.a in Frameworks */,
-				BC27F81E25C96A4100C1B97A /* KeychainAccess in Frameworks */,
+				BC5B4CE127F8C29C003D2461 /* MusicThreadTokenStore in Frameworks */,
 				BC2FFE1A25C9674600494949 /* Intents.framework in Frameworks */,
-				BC27F82025C96A4100C1B97A /* JWTDecode in Frameworks */,
+				BC5B4CDF27F8C29C003D2461 /* MusicThreadAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,27 +127,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC2FFCFB25C8344600494949 /* libMusicThreadAPI.a in Frameworks */,
+				BC5B4CD727F8C126003D2461 /* MusicThreadTokenStore in Frameworks */,
+				BC5B4CD927F8C269003D2461 /* MusicThreadAPI in Frameworks */,
 				BC52CBF125C6CAED00746627 /* Kingfisher in Frameworks */,
-				BC695CCA25C5FCF90003AA2B /* KeychainAccess in Frameworks */,
-				BC2FFCDB25C80A5D00494949 /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BC2FFCE725C833E000494949 /* MusicThreadAPI */ = {
-			isa = PBXGroup;
-			children = (
-				BCD7A97D25BED2ED007BCF8D /* Auth.swift */,
-				BC2FFCFE25C8345B00494949 /* ClientCredentials.swift */,
-				BC3DADA425C5951200480220 /* API.swift */,
-				BC3DADA125C5931900480220 /* TokenStore.swift */,
-			);
-			path = MusicThreadAPI;
-			sourceTree = "<group>";
-		};
 		BC2FFCFA25C8344600494949 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,7 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				BC78F29225B49C2900E266F8 /* MusicThread */,
-				BC2FFCE725C833E000494949 /* MusicThreadAPI */,
 				BC2FFD1725C8392600494949 /* ShareExtension */,
 				BC2FFE1B25C9674600494949 /* IntentsExtension */,
 				BC78F29125B49C2900E266F8 /* Products */,
@@ -272,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				BC78F29025B49C2900E266F8 /* MusicThread.app */,
-				BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */,
 				BC2FFD1625C8392600494949 /* ShareExtension.appex */,
 				BC2FFE1925C9674600494949 /* IntentsExtension.appex */,
 			);
@@ -295,27 +230,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BC2FFCE525C833E000494949 /* MusicThreadAPI */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BC2FFCEA25C833E000494949 /* Build configuration list for PBXNativeTarget "MusicThreadAPI" */;
-			buildPhases = (
-				BC2FFCE225C833E000494949 /* Sources */,
-				BC2FFCE325C833E000494949 /* Frameworks */,
-				BC2FFCE425C833E000494949 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MusicThreadAPI;
-			packageProductDependencies = (
-				BC2FFD0225C835D100494949 /* KeychainAccess */,
-				BC2FFD0825C8369800494949 /* JWTDecode */,
-			);
-			productName = MusicThreadAPI;
-			productReference = BC2FFCE625C833E000494949 /* libMusicThreadAPI.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		BC2FFD1525C8392600494949 /* ShareExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC2FFD2125C8392600494949 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
@@ -327,9 +241,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				BC2FFD9B25C8492300494949 /* PBXTargetDependency */,
 			);
 			name = ShareExtension;
+			packageProductDependencies = (
+				BC5B4CDA27F8C296003D2461 /* MusicThreadAPI */,
+				BC5B4CDC27F8C296003D2461 /* MusicThreadTokenStore */,
+			);
 			productName = ShareExtension;
 			productReference = BC2FFD1625C8392600494949 /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -345,12 +262,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				BC27F81C25C96A3900C1B97A /* PBXTargetDependency */,
 			);
 			name = IntentsExtension;
 			packageProductDependencies = (
-				BC27F81D25C96A4100C1B97A /* KeychainAccess */,
-				BC27F81F25C96A4100C1B97A /* JWTDecode */,
+				BC5B4CDE27F8C29C003D2461 /* MusicThreadAPI */,
+				BC5B4CE027F8C29C003D2461 /* MusicThreadTokenStore */,
 			);
 			productName = IntentsExtension;
 			productReference = BC2FFE1925C9674600494949 /* IntentsExtension.appex */;
@@ -368,15 +284,14 @@
 			buildRules = (
 			);
 			dependencies = (
-				BC2FFCF925C8343D00494949 /* PBXTargetDependency */,
 				BC2FFD1F25C8392600494949 /* PBXTargetDependency */,
 				BC2FFE2025C9674600494949 /* PBXTargetDependency */,
 			);
 			name = MusicThread;
 			packageProductDependencies = (
-				BC695CC925C5FCF90003AA2B /* KeychainAccess */,
 				BC52CBF025C6CAED00746627 /* Kingfisher */,
-				BC2FFCDA25C80A5D00494949 /* JWTDecode */,
+				BC5B4CD627F8C126003D2461 /* MusicThreadTokenStore */,
+				BC5B4CD827F8C269003D2461 /* MusicThreadAPI */,
 			);
 			productName = "MusicThread Auth";
 			productReference = BC78F29025B49C2900E266F8 /* MusicThread.app */;
@@ -391,9 +306,6 @@
 				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
-					BC2FFCE525C833E000494949 = {
-						CreatedOnToolsVersion = 12.3;
-					};
 					BC2FFD1525C8392600494949 = {
 						CreatedOnToolsVersion = 12.3;
 					};
@@ -415,16 +327,14 @@
 			);
 			mainGroup = BC78F28725B49C2900E266F8;
 			packageReferences = (
-				BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */,
 			);
 			productRefGroup = BC78F29125B49C2900E266F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				BC78F28F25B49C2900E266F8 /* MusicThread */,
-				BC2FFCE525C833E000494949 /* MusicThreadAPI */,
 				BC2FFD1525C8392600494949 /* ShareExtension */,
 				BC2FFE1825C9674600494949 /* IntentsExtension */,
 			);
@@ -459,17 +369,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BC2FFCE225C833E000494949 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC2FFCEF25C833E900494949 /* Auth.swift in Sources */,
-				BC2FFCF125C833E900494949 /* API.swift in Sources */,
-				BC2FFCF025C833E900494949 /* TokenStore.swift in Sources */,
-				BC2FFCFF25C8345B00494949 /* ClientCredentials.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BC2FFD1225C8392600494949 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -511,25 +410,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BC27F81C25C96A3900C1B97A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BC2FFCE525C833E000494949 /* MusicThreadAPI */;
-			targetProxy = BC27F81B25C96A3900C1B97A /* PBXContainerItemProxy */;
-		};
-		BC2FFCF925C8343D00494949 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BC2FFCE525C833E000494949 /* MusicThreadAPI */;
-			targetProxy = BC2FFCF825C8343D00494949 /* PBXContainerItemProxy */;
-		};
 		BC2FFD1F25C8392600494949 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BC2FFD1525C8392600494949 /* ShareExtension */;
 			targetProxy = BC2FFD1E25C8392600494949 /* PBXContainerItemProxy */;
-		};
-		BC2FFD9B25C8492300494949 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BC2FFCE525C833E000494949 /* MusicThreadAPI */;
-			targetProxy = BC2FFD9A25C8492300494949 /* PBXContainerItemProxy */;
 		};
 		BC2FFE2025C9674600494949 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -550,32 +434,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		BC2FFCEB25C833E000494949 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UMVF6688JY;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		BC2FFCEC25C833E000494949 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UMVF6688JY;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		BC2FFD2225C8392600494949 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -823,15 +681,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC2FFCEA25C833E000494949 /* Build configuration list for PBXNativeTarget "MusicThreadAPI" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BC2FFCEB25C833E000494949 /* Debug */,
-				BC2FFCEC25C833E000494949 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		BC2FFD2125C8392600494949 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -871,14 +720,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:auth0/JWTDecode.swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.0;
-			};
-		};
 		BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:onevcat/Kingfisher.git";
@@ -887,51 +728,51 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+		BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:kishikawakatsumi/KeychainAccess.git";
+			repositoryURL = "git@github.com:brushedtype/musicthread-swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.1;
+				minimumVersion = 0.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BC27F81D25C96A4100C1B97A /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		BC27F81F25C96A4100C1B97A /* JWTDecode */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
-			productName = JWTDecode;
-		};
-		BC2FFCDA25C80A5D00494949 /* JWTDecode */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
-			productName = JWTDecode;
-		};
-		BC2FFD0225C835D100494949 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		BC2FFD0825C8369800494949 /* JWTDecode */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BC2FFCD925C80A5D00494949 /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
-			productName = JWTDecode;
-		};
 		BC52CBF025C6CAED00746627 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		BC695CC925C5FCF90003AA2B /* KeychainAccess */ = {
+		BC5B4CD627F8C126003D2461 /* MusicThreadTokenStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BC695CC825C5FCF90003AA2B /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
+			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadTokenStore;
+		};
+		BC5B4CD827F8C269003D2461 /* MusicThreadAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadAPI;
+		};
+		BC5B4CDA27F8C296003D2461 /* MusicThreadAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadAPI;
+		};
+		BC5B4CDC27F8C296003D2461 /* MusicThreadTokenStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadTokenStore;
+		};
+		BC5B4CDE27F8C29C003D2461 /* MusicThreadAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadAPI;
+		};
+		BC5B4CE027F8C29C003D2461 /* MusicThreadTokenStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadTokenStore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

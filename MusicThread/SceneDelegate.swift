@@ -9,7 +9,7 @@ import UIKit
 import AuthenticationServices
 import SwiftUI
 import MusicThreadAPI
-import KeychainAccess
+import MusicThreadTokenStore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,9 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         redirectURI: "musicthread://auth"
     )
 
-    private let keychain = Keychain(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
+    private let tokenStorage = KeychainTokenStorage(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
 
-    private lazy var viewModel = RootViewModel(client: self.client, keychain: self.keychain)
+    private lazy var viewModel = RootViewModel(client: self.client, tokenStorage: self.tokenStorage)
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import MusicThreadAPI
-import KeychainAccess
+import MusicThreadTokenStore
 
 class ExtensionContext {
 
@@ -25,11 +25,10 @@ class MainInterfaceController: UIHostingController<MainInterfaceView> {
         redirectURI: "musicthread://auth"
     )
 
-    static let keychain = Keychain(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
-
 
     @objc init() {
-        let api = API(client: MainInterfaceController.client, keychain: MainInterfaceController.keychain)
+        let tokenStorage = KeychainTokenStorage(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
+        let api = API(client: MainInterfaceController.client, tokenStorage: tokenStorage)
         let context = ExtensionContext()
 
         super.init(rootView: MainInterfaceView(apiClient: api, extension: context))

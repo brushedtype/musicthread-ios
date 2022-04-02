@@ -8,13 +8,10 @@
 import Foundation
 import SwiftUI
 import MusicThreadAPI
-import KeychainAccess
 
 @MainActor
 final class RootViewModel: ObservableObject {
 
-    let client: ClientCredentials
-    let keychain: Keychain
     let apiClient: API
 
     private var fetchThreadsTask: Task<Void, Never>?
@@ -26,10 +23,8 @@ final class RootViewModel: ObservableObject {
     @Published var featured: [MusicThreadAPI.Thread] = []
 
 
-    init(client: ClientCredentials, keychain: Keychain) {
-        self.client = client
-        self.apiClient = API(client: client, keychain: keychain)
-        self.keychain = keychain
+    init(client: ClientCredentials, tokenStorage: TokenStorage) {
+        self.apiClient = API(client: client, tokenStorage: tokenStorage)
     }
 
     func setAuth(tokenResponse: TokenResponse) async throws {

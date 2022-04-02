@@ -7,7 +7,7 @@
 
 import Intents
 import MusicThreadAPI
-import KeychainAccess
+import MusicThreadTokenStore
 
 extension API {
 
@@ -18,9 +18,9 @@ extension API {
             redirectURI: "musicthread://auth"
         )
 
-        let keychain = Keychain(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
+        let tokenStorage = KeychainTokenStorage(service: "co.brushedtype.musicthread", accessGroup: "group.co.brushedtype.musicthread")
 
-        return API(client: client, keychain: keychain)
+        return API(client: client, tokenStorage: tokenStorage)
     }()
 
 }
