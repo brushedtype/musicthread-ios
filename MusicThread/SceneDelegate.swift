@@ -74,43 +74,43 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         let (authURL, state, codeVerfier) = self.client.generateAuthURL()
-
-        debugPrint(authURL, state, codeVerfier)
+        DEBUG_debugPrint(authURL, state, codeVerfier)
 
         self.authSession = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "musicthread") { (url, error) in
+            func tearDownAuthSession(printingMessage message: Any...) {
+                // setting `self.authSession = nil` marks the authentication process as completed
+                self.authSession = nil
+                DEBUG_debugPrint(message)
+            }
+
             guard error == nil else {
-                return debugPrint(error!)
+                // we should show an error to the user, but this is a preview/demo app and I'm being lazy
+                return tearDownAuthSession(printingMessage: error!)
             }
 
             guard let url = url else {
-                return debugPrint("missing url")
+                return tearDownAuthSession(printingMessage: "missing url")
             }
 
-            let components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-
-            if let err = components.queryItems?.first(where: { $0.name == "error" })?.value {
-                return debugPrint(err)
-            }
-
-            guard let code = components.queryItems?.first(where: { $0.name == "code" })?.value else {
-                return debugPrint("missing auth code")
-            }
-
-            guard let checkState = components.queryItems?.first(where: { $0.name == "state" })?.value else {
-                return debugPrint("missing state")
+            guard let (code, checkState) = self.parseResponseURL(url: url) else {
+                return tearDownAuthSession(printingMessage: "invalid url")
             }
 
             guard state == checkState else {
-                return debugPrint("state mismatch", state, checkState)
+                return tearDownAuthSession(printingMessage: "state mismatch", state, checkState)
             }
 
             self.client.exchangeToken(code: code, verifier: codeVerfier) { result in
+                defer {
+                    tearDownAuthSession(printingMessage: "authentication complete with result:", result)
+                }
+
                 switch result {
                 case .failure(let error as DecodingError):
-                    debugPrint("token response didn't match expected format", error)
+                    DEBUG_debugPrint("token response didn't match expected format", error)
 
                 case .failure(let error):
-                    debugPrint(error)
+                    DEBUG_debugPrint(error)
 
                 case .success(let tokenResposne):
                     Task.detached(priority: .userInitiated) {
@@ -124,6 +124,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.authSession?.start()
     }
 
+    private func parseResponseURL(url: URL) -> (code: String, state: String)? {
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+
+        if let err = components.queryItems?.first(where: { $0.name == "error" })?.value {
+            DEBUG_debugPrint(err)
+            return nil
+        }
+
+        guard let code = components.queryItems?.first(where: { $0.name == "code" })?.value else {
+            DEBUG_debugPrint("missing auth code")
+            return nil
+        }
+
+        guard let checkState = components.queryItems?.first(where: { $0.name == "state" })?.value else {
+            DEBUG_debugPrint("missing state")
+            return nil
+        }
+
+        return (code, checkState)
+    }
+
 }
 
 extension SceneDelegate: ASWebAuthenticationPresentationContextProviding {
@@ -132,4 +153,10 @@ extension SceneDelegate: ASWebAuthenticationPresentationContextProviding {
         return ASPresentationAnchor(windowScene: self.window!.windowScene!)
     }
 
+}
+
+fileprivate func DEBUG_debugPrint(_ items: Any...) {
+#if DEBUG
+    debugPrint(items)
+#endif
 }
