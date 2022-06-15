@@ -81,7 +81,7 @@ extension IntentHandler: AddLinkIntentHandling {
         }
 
         do {
-            let response = try await API.shared.submitLink(threadKey: threadKey, linkURL: linkURL.absoluteString)
+            let response = try await API.shared.submitLink(threadKey: threadKey, description: "", linkURL: linkURL.absoluteString)
 
             let intentResponse = AddLinkIntentResponse(code: .success, userActivity: nil)
             intentResponse.link = IntentsExtension.Link(link: response.link)

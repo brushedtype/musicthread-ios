@@ -27,12 +27,12 @@
 		BC52CC0425C6DE9200746627 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0325C6DE9200746627 /* ThreadHeaderView.swift */; };
 		BC52CC0725C6DEA600746627 /* ThreadLinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0625C6DEA600746627 /* ThreadLinkItemView.swift */; };
 		BC52CC0A25C6E23B00746627 /* NewThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC52CC0925C6E23B00746627 /* NewThreadView.swift */; };
-		BC5B4CD727F8C126003D2461 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CD627F8C126003D2461 /* MusicThreadTokenStore */; };
-		BC5B4CD927F8C269003D2461 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CD827F8C269003D2461 /* MusicThreadAPI */; };
-		BC5B4CDB27F8C296003D2461 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CDA27F8C296003D2461 /* MusicThreadAPI */; };
-		BC5B4CDD27F8C296003D2461 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CDC27F8C296003D2461 /* MusicThreadTokenStore */; };
-		BC5B4CDF27F8C29C003D2461 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CDE27F8C29C003D2461 /* MusicThreadAPI */; };
-		BC5B4CE127F8C29C003D2461 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC5B4CE027F8C29C003D2461 /* MusicThreadTokenStore */; };
+		BC6C9AF5285A2EE9009DAB16 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC6C9AF4285A2EE9009DAB16 /* MusicThreadAPI */; };
+		BC6C9AF7285A2EE9009DAB16 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC6C9AF6285A2EE9009DAB16 /* MusicThreadTokenStore */; };
+		BC6C9AF9285A2EF2009DAB16 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC6C9AF8285A2EF2009DAB16 /* MusicThreadAPI */; };
+		BC6C9AFB285A2EF2009DAB16 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC6C9AFA285A2EF2009DAB16 /* MusicThreadTokenStore */; };
+		BC6C9AFD285A2EFA009DAB16 /* MusicThreadAPI in Frameworks */ = {isa = PBXBuildFile; productRef = BC6C9AFC285A2EFA009DAB16 /* MusicThreadAPI */; };
+		BC6C9AFF285A2EFA009DAB16 /* MusicThreadTokenStore in Frameworks */ = {isa = PBXBuildFile; productRef = BC6C9AFE285A2EFA009DAB16 /* MusicThreadTokenStore */; };
 		BC78F29425B49C2900E266F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29325B49C2900E266F8 /* AppDelegate.swift */; };
 		BC78F29625B49C2900E266F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC78F29525B49C2900E266F8 /* SceneDelegate.swift */; };
 		BC78F29D25B49C2A00E266F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC78F29C25B49C2A00E266F8 /* Assets.xcassets */; };
@@ -108,8 +108,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC5B4CDD27F8C296003D2461 /* MusicThreadTokenStore in Frameworks */,
-				BC5B4CDB27F8C296003D2461 /* MusicThreadAPI in Frameworks */,
+				BC6C9AFB285A2EF2009DAB16 /* MusicThreadTokenStore in Frameworks */,
+				BC6C9AF9285A2EF2009DAB16 /* MusicThreadAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,9 +117,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC5B4CE127F8C29C003D2461 /* MusicThreadTokenStore in Frameworks */,
+				BC6C9AFF285A2EFA009DAB16 /* MusicThreadTokenStore in Frameworks */,
 				BC2FFE1A25C9674600494949 /* Intents.framework in Frameworks */,
-				BC5B4CDF27F8C29C003D2461 /* MusicThreadAPI in Frameworks */,
+				BC6C9AFD285A2EFA009DAB16 /* MusicThreadAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,9 +127,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC5B4CD727F8C126003D2461 /* MusicThreadTokenStore in Frameworks */,
-				BC5B4CD927F8C269003D2461 /* MusicThreadAPI in Frameworks */,
+				BC6C9AF7285A2EE9009DAB16 /* MusicThreadTokenStore in Frameworks */,
 				BC52CBF125C6CAED00746627 /* Kingfisher in Frameworks */,
+				BC6C9AF5285A2EE9009DAB16 /* MusicThreadAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,8 +244,8 @@
 			);
 			name = ShareExtension;
 			packageProductDependencies = (
-				BC5B4CDA27F8C296003D2461 /* MusicThreadAPI */,
-				BC5B4CDC27F8C296003D2461 /* MusicThreadTokenStore */,
+				BC6C9AF8285A2EF2009DAB16 /* MusicThreadAPI */,
+				BC6C9AFA285A2EF2009DAB16 /* MusicThreadTokenStore */,
 			);
 			productName = ShareExtension;
 			productReference = BC2FFD1625C8392600494949 /* ShareExtension.appex */;
@@ -265,8 +265,8 @@
 			);
 			name = IntentsExtension;
 			packageProductDependencies = (
-				BC5B4CDE27F8C29C003D2461 /* MusicThreadAPI */,
-				BC5B4CE027F8C29C003D2461 /* MusicThreadTokenStore */,
+				BC6C9AFC285A2EFA009DAB16 /* MusicThreadAPI */,
+				BC6C9AFE285A2EFA009DAB16 /* MusicThreadTokenStore */,
 			);
 			productName = IntentsExtension;
 			productReference = BC2FFE1925C9674600494949 /* IntentsExtension.appex */;
@@ -290,8 +290,8 @@
 			name = MusicThread;
 			packageProductDependencies = (
 				BC52CBF025C6CAED00746627 /* Kingfisher */,
-				BC5B4CD627F8C126003D2461 /* MusicThreadTokenStore */,
-				BC5B4CD827F8C269003D2461 /* MusicThreadAPI */,
+				BC6C9AF4285A2EE9009DAB16 /* MusicThreadAPI */,
+				BC6C9AF6285A2EE9009DAB16 /* MusicThreadTokenStore */,
 			);
 			productName = "MusicThread Auth";
 			productReference = BC78F29025B49C2900E266F8 /* MusicThread.app */;
@@ -328,7 +328,7 @@
 			mainGroup = BC78F28725B49C2900E266F8;
 			packageReferences = (
 				BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */,
+				BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */,
 			);
 			productRefGroup = BC78F29125B49C2900E266F8 /* Products */;
 			projectDirPath = "";
@@ -439,7 +439,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -460,7 +460,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -481,7 +481,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = IntentsExtension/IntentsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				INFOPLIST_FILE = IntentsExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -502,7 +502,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = IntentsExtension/IntentsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = UMVF6688JY;
 				INFOPLIST_FILE = IntentsExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -728,12 +728,12 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */ = {
+		BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:brushedtype/musicthread-swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -744,34 +744,34 @@
 			package = BC52CBEF25C6CAED00746627 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		BC5B4CD627F8C126003D2461 /* MusicThreadTokenStore */ = {
+		BC6C9AF4285A2EE9009DAB16 /* MusicThreadAPI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			package = BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			productName = MusicThreadAPI;
+		};
+		BC6C9AF6285A2EE9009DAB16 /* MusicThreadTokenStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
 			productName = MusicThreadTokenStore;
 		};
-		BC5B4CD827F8C269003D2461 /* MusicThreadAPI */ = {
+		BC6C9AF8285A2EF2009DAB16 /* MusicThreadAPI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			package = BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
 			productName = MusicThreadAPI;
 		};
-		BC5B4CDA27F8C296003D2461 /* MusicThreadAPI */ = {
+		BC6C9AFA285A2EF2009DAB16 /* MusicThreadTokenStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
-			productName = MusicThreadAPI;
-		};
-		BC5B4CDC27F8C296003D2461 /* MusicThreadTokenStore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			package = BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
 			productName = MusicThreadTokenStore;
 		};
-		BC5B4CDE27F8C29C003D2461 /* MusicThreadAPI */ = {
+		BC6C9AFC285A2EFA009DAB16 /* MusicThreadAPI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			package = BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
 			productName = MusicThreadAPI;
 		};
-		BC5B4CE027F8C29C003D2461 /* MusicThreadTokenStore */ = {
+		BC6C9AFE285A2EFA009DAB16 /* MusicThreadTokenStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BC5B4CD327F8C126003D2461 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
+			package = BC6C9AF3285A2EE9009DAB16 /* XCRemoteSwiftPackageReference "musicthread-swift" */;
 			productName = MusicThreadTokenStore;
 		};
 /* End XCSwiftPackageProductDependency section */

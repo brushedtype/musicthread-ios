@@ -185,7 +185,7 @@ struct MainInterfaceView: View {
             }
 
             do {
-                let _ = try await self.apiClient.submitLink(threadKey: thread.key, linkURL: url.absoluteString)
+                let _ = try await self.apiClient.submitLink(threadKey: thread.key, description: "", linkURL: url.absoluteString)
                 extensionContext.completeRequest(returningItems: nil, completionHandler: nil)
             } catch {
                 debugPrint(error)

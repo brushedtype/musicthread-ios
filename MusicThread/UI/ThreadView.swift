@@ -147,7 +147,7 @@ struct ThreadView: View {
         self.isSubmittingLink = true
 
         do {
-            let _ = try await self.apiClient.submitLink(threadKey: self.thread.key, linkURL: linkURL)
+            let _ = try await self.apiClient.submitLink(threadKey: self.thread.key, description: "", linkURL: linkURL)
             await self.reloadLinks()
 
             self.isPresentingNewLinkView = false
